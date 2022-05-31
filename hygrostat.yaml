@@ -1,0 +1,4 @@
+- name: Hallway Humidity Control
+  humidifier: switch.hallway_dehumidifier
+  target_sensor: sensor.hallway_climate_sensor_humidity
+  device_class: dehumidifier

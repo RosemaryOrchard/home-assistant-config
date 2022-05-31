@@ -1,0 +1,7 @@
+- platform: workday
+  country: GB
+  workdays: [mon, tue, wed, thu, fri]
+  excludes: [sat, sun]
+  remove_holidays:
+    - "[Scotland]"
+    - "[Northern Ireland]"

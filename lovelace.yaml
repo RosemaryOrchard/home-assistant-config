@@ -1,0 +1,1012 @@
+views:
+  - path: default_view
+    title: Overview
+    visible:
+      - user: ecdb43732115402aa04907f568d16acd
+    theme: ""
+    badges: []
+    cards:
+      - type: vertical-stack
+        cards:
+          - type: entity
+            entity: sensor.last_occupied_room
+          - type: grid
+            cards:
+              - type: glance
+                entities:
+                  - entity: binary_sensor.bathroom_occupied
+                show_state: false
+                state_color: false
+              - type: glance
+                entities:
+                  - entity: binary_sensor.presence_bathroom
+                show_state: false
+              - type: glance
+                entities:
+                  - entity: binary_sensor.bedroom_occupied
+                show_state: false
+              - type: glance
+                entities:
+                  - entity: binary_sensor.presence_bedroom
+                show_state: false
+              - type: glance
+                entities:
+                  - entity: binary_sensor.hallway_occupied
+                show_state: false
+              - type: glance
+                entities:
+                  - entity: binary_sensor.hallway_presence
+                show_state: false
+              - type: glance
+                entities:
+                  - entity: binary_sensor.kitchen_occupied
+                show_state: false
+              - type: glance
+                entities:
+                  - entity: binary_sensor.kitchen_presence
+                show_state: false
+              - type: glance
+                entities:
+                  - entity: binary_sensor.living_room_occupied
+                show_state: false
+              - type: glance
+                entities:
+                  - entity: binary_sensor.lounge_presence
+                show_state: false
+              - type: glance
+                entities:
+                  - entity: binary_sensor.office_occupied
+                show_state: false
+              - type: glance
+                entities:
+                  - entity: binary_sensor.office_presence
+                show_state: false
+            columns: 2
+            square: false
+      - type: vertical-stack
+        cards:
+          - type: glance
+            entities:
+              - entity: input_datetime.alarm_time
+              - entity: binary_sensor.alarm_clock_status
+              - entity: input_select.manual_alarm_setting
+            show_icon: true
+            show_name: false
+            state_color: false
+            title: Alarm Clock
+          - type: entity
+            entity: input_datetime.alarm_clock_ran
+            state_color: false
+      - type: horizontal-stack
+        cards:
+          - type: vertical-stack
+            cards:
+              - type: button
+                tap_action:
+                  action: call-service
+                  service: input_select.select_next
+                  service_data: {}
+                  target:
+                    entity_id: input_select.heating_pad_selector
+                entity: input_select.heating_pad_selector
+                show_state: true
+                show_icon: false
+                show_name: false
+              - type: conditional
+                conditions:
+                  - entity: input_select.heating_pad_selector
+                    state: Living Room
+                card:
+                  show_name: true
+                  show_icon: true
+                  type: button
+                  tap_action:
+                    action: toggle
+                  entity: input_boolean.living_room_heating_pad_controller
+                  name: Living Room
+              - type: conditional
+                conditions:
+                  - entity: input_select.heating_pad_selector
+                    state: Office
+                card:
+                  show_name: true
+                  show_icon: true
+                  type: button
+                  tap_action:
+                    action: toggle
+                  entity: input_boolean.office_heating_pad_controller
+                  name: Office
+          - type: conditional
+            conditions:
+              - entity: binary_sensor.a_heating_pad_is_on
+                state: "on"
+            card:
+              type: vertical-stack
+              cards:
+                - type: horizontal-stack
+                  cards:
+                    - type: entity
+                      entity: input_select.heating_pad_state
+                    - type: markdown
+                      content: >-
+                        {{ state_attr('input_datetime.heating_pad_time_change',
+                        'timestamp')|timestamp_custom('%H:%M') }}
+                - type: conditional
+                  conditions:
+                    - entity: switch.office_heating_pad
+                      state: "on"
+                  card:
+                    type: vertical-stack
+                    cards:
+                      - show_name: false
+                        show_icon: true
+                        show_state: true
+                        type: glance
+                        entities:
+                          - entity: switch.office_heating_pad
+                - type: conditional
+                  conditions:
+                    - entity: input_boolean.living_room_heating_pad_controller
+                      state: "on"
+                  card:
+                    type: vertical-stack
+                    cards:
+                      - show_name: false
+                        show_icon: true
+                        show_state: true
+                        type: glance
+                        entities:
+                          - entity: switch.living_room_heating_pad
+      - type: weather-forecast
+        entity: weather.home
+        show_forecast: false
+      - type: entities
+        entities:
+          - entity: sun.sun
+        title: Sun
+      - type: glance
+        entities:
+          - entity: device_tracker.car_location
+          - entity: sensor.mileage
+        title: Clio
+        state_color: true
+        show_icon: true
+      - type: glance
+        entities:
+          - entity: sensor.sonarr_upcoming
+          - entity: sensor.radarr_movies
+      - type: entity
+        entity: binary_sensor.rosemarys_iphone_13_pro_focus
+      - type: glance
+        entities:
+          - entity: binary_sensor.pi_hole
+          - entity: sensor.pi_hole_ads_blocked_today
+          - entity: binary_sensor.pi_hole_2
+          - entity: sensor.pi_hole_ads_blocked_today_2
+      - type: entities
+        entities:
+          - entity: sensor.frient_energy_meter_reader_energy
+          - entity: sensor.frient_energy_meter_reader_power
+        title: Electricity Meter
+      - type: glance
+        entities:
+          - entity: sensor.netatmo_bedroom_temperature
+          - entity: >-
+              sensor.netatmo_queens_square_station_additional_smart_indoor_module_temperature
+          - entity: sensor.netatmo_queens_square_station_temperature
+        title: Temperatures
+        show_name: true
+        show_state: true
+      - type: custom:scheduler-card
+        title: true
+        discover_existing: true
+      - type: custom:purifier-card
+        entity: fan.bedroom_air_purifier
+      - type: calendar
+        entities:
+          - calendar.garbage_collection
+        initial_view: listWeek
+      - type: map
+        entities:
+          - entity: person.rosemary_orchard
+          - entity: person.dad
+          - entity: person.mum
+        title: People
+      - type: conditional
+        conditions:
+          - entity: switch.electric_blanket
+            state: "on"
+        card:
+          type: horizontal-stack
+          title: Electric Blanket
+          cards:
+            - type: button
+              tap_action:
+                action: call-service
+                service: input_select.select_next
+                service_data: {}
+                target:
+                  entity_id: input_select.electric_blanket_time_off_options
+              show_icon: true
+              show_state: true
+              entity: input_select.electric_blanket_time_off_options
+              show_name: false
+            - type: markdown
+              content: >-
+                {{ state_attr('input_datetime.electric_blanket_off',
+                'timestamp')|timestamp_custom('%H:%M') }}
+              title: Time Off
+      - type: logbook
+        entities:
+          - person.rosemary_orchard
+        hours_to_show: 24
+      - type: picture-elements
+        title: Home
+        image: /local/floorplan.png
+        elements:
+          - type: state-label
+            entity: sensor.netatmo_queens_square_station_temperature
+            style:
+              top: 32%
+              left: 40%
+      - type: vertical-stack
+        cards:
+          - type: horizontal-stack
+            cards:
+              - type: entity
+                entity: input_select.washing_machine_status
+              - type: entity
+                entity: input_select.tumble_dryer_status
+          - type: horizontal-stack
+            cards:
+              - type: entity
+                entity: counter.water_jug_filter
+                unit: days left
+              - type: conditional
+                conditions:
+                  - entity: binary_sensor.water_jug_filter_needs_replacing
+                    state: "on"
+                card:
+                  type: button
+                  tap_action:
+                    action: more-info
+                  entity: counter.water_jug_filter
+                  icon_height: 32px
+                  hold_action:
+                    action: call-service
+                    service: counter.reset
+                    service_data: {}
+                    target:
+                      entity_id: counter.water_jug_filter
+                  name: Replaced Water Jug Filter
+          - type: horizontal-stack
+            cards:
+              - type: entity
+                entity: input_select.dishwasher_status
+              - type: entity
+                entity: counter.dishwasher_refills_remaining
+                unit: washes left
+                name: Dishwasher
+              - type: button
+                tap_action:
+                  action: call-service
+                  service: notify.notify
+                  service_data:
+                    title: Did you refill?
+                    message: Tap and hold to confirm.
+                  target: {}
+                entity: counter.dishwasher_refills_remaining
+                name: Refill Dishwasher Cassette
+                show_state: false
+                show_icon: false
+                show_name: true
+                hold_action:
+                  action: call-service
+                  service: counter.reset
+                  service_data: {}
+                  target:
+                    entity_id: counter.dishwasher_refills_remaining
+      - type: vertical-stack
+        cards:
+          - type: horizontal-stack
+            cards:
+              - type: button
+                tap_action:
+                  action: call-service
+                  service: script.all_heating_to_15
+                  service_data: {}
+                  target: {}
+                name: "12"
+                show_icon: true
+                icon: mdi:home-circle-outline
+              - type: button
+                tap_action:
+                  action: call-service
+                  service: climate.set_temperature
+                  service_data:
+                    temperature: 15
+                  target:
+                    entity_id:
+                      - climate.bedroom_thermostat
+                      - climate.hallway_thermostat
+                      - climate.living_room_thermostat
+                      - climate.office_thermostat
+                      - climate.hallway
+                      - climate.living_room
+                icon: mdi:home-circle
+                name: "15"
+          - type: grid
+            cards:
+              - type: thermostat
+                entity: climate.hallway
+              - type: thermostat
+                entity: climate.living_room
+              - type: thermostat
+                entity: climate.office_thermostat
+              - type: thermostat
+                entity: climate.bedroom_thermostat
+            columns: 2
+      - type: custom:auto-entities
+        card:
+          type: entities
+          title: Lights On
+        filter:
+          include:
+            - domain: light
+              state: "on"
+          exclude: []
+      - type: custom:auto-entities
+        card:
+          type: entities
+          title: Switches On
+        filter:
+          include:
+            - state: "on"
+              domain: switch
+          exclude:
+            - entity_id: "*the_promised_lan*"
+        sort:
+          method: none
+      - type: custom:auto-entities
+        card:
+          type: entities
+          title: Lights Off
+        filter:
+          include:
+            - domain: light
+              state: "off"
+          exclude: []
+        sort:
+          method: none
+      - type: vertical-stack
+        cards:
+          - type: markdown
+            content: " # Tasks"
+          - type: conditional
+            conditions:
+              - entity: input_select.tumble_dryer_status
+                state: Needs Emptying
+            card:
+              type: markdown
+              content: Empty the Tumble Dryer
+          - type: conditional
+            conditions:
+              - entity: input_select.washing_machine_status
+                state: Clean
+            card:
+              type: markdown
+              content: Empty the Washing Machine
+          - type: conditional
+            conditions:
+              - entity: binary_sensor.replace_dishwasher_cassette
+                state: "on"
+            card:
+              type: button
+              tap_action:
+                action: call-service
+                service: notify.notify
+                service_data:
+                  title: Did you refill?
+                  message: Tap and hold to confirm.
+                target: {}
+              entity: counter.dishwasher_refills_remaining
+              name: Refill Dishwasher Cassette
+              show_state: false
+              show_icon: false
+              show_name: true
+              hold_action:
+                action: call-service
+                service: counter.reset
+                service_data: {}
+                target:
+                  entity_id: counter.dishwasher_refills_remaining
+          - type: conditional
+            conditions:
+              - entity: binary_sensor.water_jug_filter_needs_replacing
+                state: "on"
+            card:
+              type: button
+              tap_action:
+                action: more-info
+              entity: counter.water_jug_filter
+              icon_height: 32px
+              hold_action:
+                action: call-service
+                service: counter.reset
+                service_data: {}
+                target:
+                  entity_id: counter.water_jug_filter
+              name: Replace Water Jug Filter
+              show_icon: false
+  - title: Kitchen iPad
+    path: kitchen-ipad
+    icon: mdi:calendar-check
+    visible:
+      - user: 60872e2a6eb942a793fba6038b95f8b1
+      - user: ecdb43732115402aa04907f568d16acd
+    type: sidebar
+    badges: []
+    cards:
+      - type: vertical-stack
+        cards:
+          - type: horizontal-stack
+            cards:
+              - type: entity
+                entity: input_select.washing_machine_status
+              - type: entity
+                entity: input_select.tumble_dryer_status
+          - type: horizontal-stack
+            cards:
+              - type: entity
+                entity: counter.water_jug_filter
+                unit: days left
+              - type: conditional
+                conditions:
+                  - entity: binary_sensor.water_jug_filter_needs_replacing
+                    state: "on"
+                card:
+                  type: button
+                  tap_action:
+                    action: more-info
+                  entity: counter.water_jug_filter
+                  icon_height: 32px
+                  hold_action:
+                    action: call-service
+                    service: counter.reset
+                    service_data: {}
+                    target:
+                      entity_id: counter.water_jug_filter
+                  name: Replaced Water Jug Filter
+          - type: horizontal-stack
+            cards:
+              - type: entity
+                entity: input_select.dishwasher_status
+              - type: entity
+                entity: counter.dishwasher_refills_remaining
+                unit: washes left
+                name: Dishwasher
+              - type: button
+                tap_action:
+                  action: call-service
+                  service: notify.notify
+                  service_data:
+                    title: Did you refill?
+                    message: Tap and hold to confirm.
+                  target: {}
+                entity: counter.dishwasher_refills_remaining
+                name: Refill Dishwasher Cassette
+                show_state: false
+                show_icon: false
+                show_name: true
+                hold_action:
+                  action: call-service
+                  service: counter.reset
+                  service_data: {}
+                  target:
+                    entity_id: counter.dishwasher_refills_remaining
+      - type: markdown
+        content: >-
+          ### Robot Mop
+
+          - Blue cloths are used on the head filled with water
+
+          - Do not use cleaning fluids, just water
+
+          - Best run twice, place it at a different starting point and in a
+          different direction before running it a second time
+
+
+          ### Tumble Dryer
+
+          - Bedding should always have a dryer sheet
+
+          - Only towels and bedding can be tumble dried
+
+          - Towels do not get a dryer sheet
+
+
+          ### Washing Machine
+
+          - Bedding should be washed with lavender fabric softener
+
+          - Most items are washed on 30 or 40, cycle 11
+
+          - Micro fibre loads and towels should not be washed with fabric
+          softener
+
+          - Micro fibre must be washed on its own - not with any other types of
+          items
+
+          - The chalky tablets or washing sachets go in the drum 
+
+          - Towels are washed on 60, cycle 4
+
+
+          ### Other
+
+          - Filters for the water jug are kept under the sink
+
+          - Bathroom cleaning products are in the cupboard on the right hand
+          side in the bathroom.
+
+          - When washing microfibre products, make sure to get (and zip shut)
+          the bag of cloths to clean my face from the bathroom.
+
+          - Blue microfibre cloths are kept in the bathroom for use in the
+          bathroom and on mirrors.
+
+          - White and yellow microfibre cloths are kept in the kitchen for use
+          in the kitchen.
+        title: Useful Information
+  - title: Grocy
+    path: grocy
+    visible:
+      - user: ecdb43732115402aa04907f568d16acd
+    badges: []
+    cards:
+      - type: entities
+        entities:
+          - sensor.grocy_chores
+          - binary_sensor.grocy_expired_products
+          - binary_sensor.grocy_expiring_products
+          - sensor.grocy_meal_plan
+          - binary_sensor.grocy_missing_products
+          - binary_sensor.grocy_overdue_chores
+          - binary_sensor.grocy_overdue_tasks
+          - sensor.grocy_shopping_list
+          - sensor.grocy_stock
+          - sensor.grocy_tasks
+      - type: custom:grocy-chores-card
+        entity: sensor.grocy_chores
+        title: Chores
+        show_quantity: null
+        show_days: null
+        show_assigned: true
+        show_last_tracked: true
+        show_last_tracked_by: true
+        show_track_button: true
+      - type: custom:grocy-chores-card
+        entity: sensor.grocy_tasks
+        title: Tasks
+        show_quantity: null
+        show_days: null
+        show_assigned: true
+        show_last_tracked: true
+        show_last_tracked_by: true
+        show_track_button: true
+  - title: UPS
+    path: ups
+    badges: []
+    cards:
+      - type: entities
+        entities:
+          - sensor.ups_battery_chemistry
+          - sensor.ups_battery_manuf_date
+          - sensor.ups_battery_runtime
+          - sensor.ups_battery_voltage
+          - sensor.ups_beeper_status
+          - sensor.ups_high_voltage_transfer
+          - sensor.ups_input_voltage
+          - sensor.ups_load
+          - sensor.ups_load_restart_delay
+          - sensor.ups_load_shutdown_timer
+          - sensor.ups_load_start_timer
+          - sensor.ups_low_battery_runtime
+          - sensor.ups_low_battery_setpoint
+          - sensor.ups_low_voltage_transfer
+          - sensor.ups_nominal_battery_voltage
+          - sensor.ups_nominal_input_voltage
+          - sensor.ups_nominal_real_power
+          - sensor.ups_output_voltage
+          - sensor.ups_self_test_result
+          - sensor.ups_status
+          - sensor.ups_status_data
+          - sensor.ups_ups_shutdown_delay
+          - sensor.ups_warning_battery_setpoint
+  - title: Storage Cupboard
+    path: storage-cupboard
+    icon: mdi:storefront-outline
+    badges: []
+    cards:
+      - type: entities
+        entities:
+          - light.storage_cupboard
+          - binary_sensor.storage_cupboard_door_sensor_contact
+          - binary_sensor.storage_cupboard_flood_sensor_water_leak
+          - sensor.storage_cupboard_flood_sensor_temperature
+          - binary_sensor.storage_cupboard_rtsp_stream
+          - sensor.storage_cupboard_climate_sensor_temperature
+          - sensor.storage_cupboard_climate_sensor_pressure
+          - sensor.storage_cupboard_climate_sensor_humidity
+      - type: picture-entity
+        entity: camera.storage_cupboard
+      - type: picture-entity
+        entity: camera.storage_cupboard
+  - title: Living Room
+    path: living-room
+    icon: mdi:sofa-outline
+    badges: []
+    cards:
+      - type: media-control
+        entity: media_player.living_room_apple_tv
+      - type: picture-entity
+        entity: camera.living_room
+      - type: alarm-panel
+        entity: alarm_control_panel.living_room
+      - type: glance
+        entities:
+          - entity: light.living_room_patio
+          - entity: light.living_room_kitchen
+          - entity: light.living_room_overhead_lights
+      - type: entities
+        entities:
+          - remote.harmony_hub
+          - select.harmony_hub_activities
+          - switch.harmony_hub_my_apple_tv
+          - switch.harmony_hub_switch
+          - switch.harmony_hub_watch_tv
+          - switch.harmony_hub_wii
+      - type: entities
+        entities:
+          - entity: sensor.living_room_light_sensor_illuminance_lux
+          - entity: var.lounge_dark_lux
+      - type: glance
+        entities:
+          - entity: var.lounge_dark_lux
+          - entity: sensor.lux_living_room
+          - entity: binary_sensor.living_room_is_dark
+      - type: logbook
+        entities:
+          - sensor.lux_living_room
+          - binary_sensor.living_room_is_dark
+        hours_to_show: 24
+      - type: button
+        tap_action:
+          action: toggle
+        entity: automation.living_room_air_freshener
+        icon: mdi:scent
+      - type: entities
+        entities:
+          - entity: lock.patio_door_right
+          - entity: binary_sensor.patio_door_right_battery_low
+          - entity: sensor.patio_door_right_battery_level
+        title: Patio Doors
+      - type: entities
+        entities:
+          - entity: cover.vertical_rotate
+      - type: picture-entity
+        entity: camera.living_room
+      - type: glance
+        entities:
+          - entity: sensor.living_room_curtain_position
+          - entity: cover.lounge_curtain
+      - type: conditional
+        conditions:
+          - entity: input_boolean.christmas
+            state: "on"
+        card:
+          type: grid
+          cards:
+            - type: button
+              tap_action:
+                action: toggle
+              entity: switch.christmas_tree
+              icon: phu:christmas-tree
+            - type: button
+              tap_action:
+                action: toggle
+              entity: switch.lights
+              icon: phu:light-string
+            - type: button
+              entity: switch.twinkly_lights
+              icon: phu:christmas-tree-v2
+      - type: custom:simple-thermostat
+        layout:
+          step: row
+        entity: climate.living_room_thermostat
+      - type: custom:vacuum-card
+        entity: vacuum.buttercup
+        image: default
+        compact_view: false
+      - type: vertical-stack
+        cards:
+          - type: custom:vacuum-card
+            entity: vacuum.buttercup
+            image: default
+            compact_view: false
+          - type: entity
+            entity: input_datetime.buttercup_cleaned
+            state_color: false
+  - title: Office
+    path: office
+    icon: mdi:desktop-mac
+    badges: []
+    cards:
+      - type: glance
+        entities:
+          - entity: binary_sensor.3d_printer_smoke_alarm_smoke
+      - type: entities
+        entities:
+          - entity: sensor.office_chair_sensor_action
+          - entity: sensor.office_chair_sensor_angle_x
+          - entity: sensor.office_chair_sensor_angle_y
+          - entity: sensor.office_chair_sensor_angle_z
+      - type: custom:simple-thermostat
+        entity: climate.office_thermostat
+        layout:
+          step: row
+      - type: vertical-stack
+        cards:
+          - type: entities
+            entities:
+              - cover.office_blind
+          - type: glance
+            entities:
+              - sensor.office_curtain_position
+              - cover.office_curtain
+      - type: custom:purifier-card
+        entity: fan.office_air_purifier
+      - type: picture-entity
+        entity: camera.3d_print_cam
+      - type: horizontal-stack
+        cards:
+          - type: button
+            tap_action:
+              action: call-service
+              service: climate.set_temperature
+              service_data:
+                temperature: 15
+              target:
+                entity_id: climate.office_thermostat
+            icon: mdi:thermometer-low
+            name: 15ºC
+          - type: button
+            tap_action:
+              action: call-service
+              service: climate.set_temperature
+              service_data:
+                temperature: 18
+              target:
+                entity_id: climate.office_thermostat
+            icon: mdi:thermometer-high
+            name: 18ºC
+      - type: grid
+        cards:
+          - type: button
+            tap_action:
+              action: call-service
+              service: scene.turn_on
+              service_data: {}
+              target:
+                entity_id: scene.podcasting_lights
+            entity: scene.podcasting_lights
+          - type: button
+            tap_action:
+              action: call-service
+              service: scene.turn_on
+              service_data: {}
+              target:
+                entity_id: scene.work_background_lighting
+            entity: scene.work_background_lighting
+      - type: grid
+        cards:
+          - type: light
+            entity: light.tradfri_driver
+            name: Shelves
+            icon: mdi:bookshelf
+          - type: light
+            entity: light.iris
+            icon: hue:iris
+          - type: light
+            entity: light.go
+            icon: hue:go
+          - type: light
+            entity: light.smart_wi_fi_light_strip_msl320c_main_channel
+          - type: light
+            entity: light.office_overhead
+            icon: mdi:ceiling-light
+          - type: button
+            tap_action:
+              action: toggle
+            entity: light.lava_lamp
+            icon: mdi:lava-lamp
+        columns: 2
+  - title: Bedroom
+    path: bedroom
+    icon: mdi:bed-outline
+    badges: []
+    cards:
+      - type: custom:simple-thermostat
+        entity: climate.bedroom_thermostat
+        layout:
+          step: row
+      - type: glance
+        entities:
+          - entity: sensor.bedroom_curtain_position
+          - entity: cover.bedroom_curtain
+      - type: entities
+        entities:
+          - entity: light.smart_led_light_strip_under_bed
+      - type: grid
+        cards:
+          - type: light
+            entity: light.bedroom_overhead
+          - type: light
+            entity: light.smart_led_light_strip_under_bed
+          - type: light
+            entity: light.bedside_lights
+      - type: vertical-stack
+        cards:
+          - type: button
+            tap_action:
+              action: toggle
+            entity: switch.electric_blanket
+            show_icon: true
+            icon: mdi:radiator
+          - type: conditional
+            conditions:
+              - entity: switch.electric_blanket
+                state: "on"
+            card:
+              type: horizontal-stack
+              title: Electric Blanket
+              cards:
+                - type: button
+                  tap_action:
+                    action: call-service
+                    service: input_select.select_next
+                    service_data: {}
+                    target:
+                      entity_id: input_select.electric_blanket_time_off_options
+                  show_icon: true
+                  show_state: true
+                  entity: input_select.electric_blanket_time_off_options
+                  show_name: false
+                - type: markdown
+                  content: >-
+                    {{ state_attr('input_datetime.electric_blanket_off',
+                    'timestamp')|timestamp_custom('%H:%M') }}
+                  title: Time Off
+      - square: true
+        columns: 2
+        type: grid
+        cards:
+          - type: button
+            tap_action:
+              action: toggle
+            entity: light.wake_up_lights
+          - type: button
+            tap_action:
+              action: toggle
+            entity: light.bedside_lights
+      - type: entities
+        entities:
+          - cover.bedroom_blind
+          - cover.bedroom_curtain
+  - title: Kitchen
+    path: kitchen
+    icon: mdi:stove
+    badges: []
+    cards:
+      - type: glance
+        entities:
+          - entity: input_select.washing_machine_status
+          - entity: input_select.tumble_dryer_status
+          - entity: input_select.dishwasher_status
+      - type: entity
+        entity: counter.dishwasher_refills_remaining
+        unit: washes
+        state_color: true
+      - type: entity
+        entity: counter.water_jug_filter
+      - type: glance
+        entities:
+          - entity: counter.water_jug_filter
+          - entity: binary_sensor.water_jug_filter_needs_replacing
+        title: Water Jug
+      - type: picture-entity
+        entity: camera.kitchen
+      - type: vertical-stack
+        cards:
+          - type: entities
+            entities:
+              - cover.kitchen_blind
+          - type: grid
+            cards:
+              - type: button
+                tap_action:
+                  action: call-service
+                  service: cover.set_cover_position
+                  service_data:
+                    position: 60
+                  target:
+                    entity_id: cover.kitchen_blind
+                entity: cover.kitchen_blind
+                name: Half Open
+                show_state: true
+                icon: mdi:window-closed
+              - type: button
+                tap_action:
+                  action: toggle
+                entity: cover.kitchen_blind
+                show_state: true
+                name: Toggle
+            columns: 2
+  - title: Hallway
+    path: hallway
+    icon: mdi:tunnel-outline
+    badges: []
+    cards:
+      - type: entities
+        entities:
+          - entity: lock.front_door_lock
+          - entity: binary_sensor.front_door_lock_battery_low
+          - entity: sensor.front_door_lock_battery_level
+        title: Front Door
+      - type: glance
+        entities:
+          - entity: sensor.hall_curtain_position
+          - entity: cover.hall_curtain
+      - type: picture-entity
+        entity: camera.entryway
+      - type: humidifier
+        entity: humidifier.hallway_humidity_control
+      - type: entities
+        entities:
+          - entity: switch.hallway_dehumidifier
+      - type: custom:simple-thermostat
+        entity: climate.hallway
+      - type: glance
+        entities:
+          - entity: sensor.hallway_climate_sensor_humidity
+          - entity: sensor.hallway_climate_sensor_temperature
+  - title: Bathroom
+    path: bathroom
+    icon: mdi:shower
+    badges: []
+    cards:
+      - type: button
+        tap_action:
+          action: call-service
+          service: switch.toggle
+          service_data: {}
+          target:
+            device_id: d14c3a38ab7ccc2670374f81aba83b42
+        entity: switch.bathroom_light
+        show_name: true
+        show_state: true
+      - type: glance
+        entities:
+          - entity: binary_sensor.bathroom_occupied
+          - entity: binary_sensor.bathroom_presence
+      - type: glance
+        entities:
+          - entity: sensor.bathroom_climate_sensor_temperature
+          - entity: sensor.bathroom_climate_sensor_humidity
+          - entity: sensor.bathroom_climate_sensor_pressure
+      - type: glance
+        entities:
+          - entity: binary_sensor.motion_sensor_bathroom_occupancy
+          - entity: binary_sensor.bathroom_door_occupancy
+      - type: media-control
+        entity: media_player.sonos_roam

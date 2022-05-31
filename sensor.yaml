@@ -1,0 +1,204 @@
+- platform: sun2
+  entity_namespace: My Home
+  latitude: !secret latitude
+  longitude: !secret longitude
+  time_zone: Europe/London
+  elevation: 59.82
+  monitored_conditions:
+    - solar_midnight
+    - astronomical_dawn
+    - nautical_dawn
+    - dawn
+    - sunrise
+    - solar_noon
+    - sunset
+    - dusk
+    - nautical_dusk
+    - astronomical_dusk
+    - daylight
+    - civil_daylight
+    - nautical_daylight
+    - astronomical_daylight
+    - night
+    - civil_night
+    - nautical_night
+    - astronomical_night
+    - elevation
+    - min_elevation
+    - max_elevation
+- platform: season
+- platform: version
+- platform: template
+  sensors:
+    washing_machine_status:
+      value_template: "{{ states('input_select.washing_machine_status') }}"
+      friendly_name: "Washing Machine Status"
+    dryer_status:
+      value_template: "{{ states('input_select.dryer_status') }}"
+      friendly_name: "Tumble Dryer Status"
+- platform: rest
+  name: SwitchBot Bedroom Curtain
+  resource: !secret switchbot_bedroom_status_url
+  method: GET
+  scan_interval: 600
+  headers:
+    Authorization: !secret switchbot_api
+    Content-Type: "application/json"
+  value_template: >
+    {% if value_json.body.slidePosition > 95 %} 0
+    {% elif value_json.body.slidePosition < 5 %} 100
+    {% else %} {{100-value_json.body.slidePosition}}
+    {% endif %}
+  json_attributes_path: "$.body"
+  json_attributes:
+    - deviceId
+    - deviceType
+    - hubDeviceId
+    - calibrate
+    - group
+    - moving
+    - slidePosition
+- platform: rest
+  name: SwitchBot Hall Curtain
+  resource: !secret switchbot_hall_status_url
+  method: GET
+  scan_interval: 600
+  headers:
+    Authorization: !secret switchbot_api
+    Content-Type: "application/json"
+  value_template: >
+    {% if value_json.body.slidePosition > 95 %} 0
+    {% elif value_json.body.slidePosition < 5 %} 100
+    {% else %} {{100-value_json.body.slidePosition}}
+    {% endif %}
+  json_attributes_path: "$.body"
+  json_attributes:
+    - deviceId
+    - deviceType
+    - hubDeviceId
+    - calibrate
+    - group
+    - moving
+    - slidePosition
+- platform: rest
+  name: SwitchBot Lounge Curtain
+  resource: !secret switchbot_lounge_status_url
+  method: GET
+  scan_interval: 600
+  headers:
+    Authorization: !secret switchbot_api
+    Content-Type: "application/json"
+  value_template: >
+    {% if value_json.body.slidePosition > 95 %} 0
+    {% elif value_json.body.slidePosition < 5 %} 100
+    {% else %} {{100-value_json.body.slidePosition}}
+    {% endif %}
+  json_attributes_path: "$.body"
+  json_attributes:
+    - deviceId
+    - deviceType
+    - hubDeviceId
+    - calibrate
+    - group
+    - moving
+    - slidePosition
+- platform: rest
+  name: SwitchBot Office Curtain
+  resource: !secret switchbot_office_status_url
+  method: GET
+  scan_interval: 600
+  headers:
+    Authorization: !secret switchbot_api
+    Content-Type: "application/json"
+  value_template: >
+    {% if value_json.body.slidePosition > 95 %} 0
+    {% elif value_json.body.slidePosition < 5 %} 100
+    {% else %} {{100-value_json.body.slidePosition}}
+    {% endif %}
+  json_attributes_path: "$.body"
+  json_attributes:
+    - deviceId
+    - deviceType
+    - hubDeviceId
+    - calibrate
+    - group
+    - moving
+    - slidePosition
+- platform: radarr
+  api_key: !secret radarr_key
+  host: !secret radarr_host
+  port: 7878
+- platform: time_date
+  display_options:
+    - "time"
+    - "date"
+    - "date_time"
+    - "date_time_utc"
+    - "date_time_iso"
+    - "time_date"
+    - "time_utc"
+- platform: integration
+  source: sensor.frient_energy_meter_reader_power
+  name: Current Power Consumption
+# - platform: temperature_feels_like
+#   unique_id: hall_feels_like
+#   name: "Hallway Feels Like Temperature"
+#   source:
+#     - sensor.hallway_climate_sensor_temperature
+#     - sensor.hallway_climate_sensor_humidity
+# - platform: temperature_feels_like
+#   unique_id: bedroom_feels_like
+#   name: "Bedroom Feels Like Temperature"
+#   source:
+#     - sensor.netatmo_bedroom_temperature
+#     - sensor.netatmo_bedroom_humidity
+# - platform: temperature_feels_like
+#   unique_id: office_feels_like
+#   name: "Office Feels Like Temperature"
+#   source:
+#     - sensor.netatmo_queens_square_station_additional_smart_indoor_module_temperature
+#     - sensor.netatmo_queens_square_station_additional_smart_indoor_module_humidity
+# - platform: temperature_feels_like
+#   unique_id: lounge_feels_like
+#   name: "Living Room Feels Like Temperature"
+#   source:
+#     - sensor.netatmo_queens_square_station_temperature
+#     - sensor.netatmo_queens_square_station_humidity
+# - platform: temperature_feels_like
+#   unique_id: kitchen_feels_like
+#   name: "Kitchen Feels Like Temperature"
+#   source:
+#     - sensor.kitchen_climate_sensor_temperature
+#     - sensor.kitchen_climate_sensor_humidity
+# - platform: temperature_feels_like
+#   unique_id: bathroom_feels_like
+#   name: "Bathroom Feels Like Temperature"
+#   source:
+#     - sensor.bathroom_climate_sensor_temperature
+#     - sensor.bathroom_climate_sensor_humidity
+- platform: illuminance
+  entity_id: weather.home
+- platform: sun2
+  entity_namespace: Home
+  monitored_conditions:
+    - solar_midnight
+    - astronomical_dawn
+    - nautical_dawn
+    - dawn
+    - sunrise
+    - solar_noon
+    - sunset
+    - dusk
+    - nautical_dusk
+    - astronomical_dusk
+    - daylight
+    - civil_daylight
+    - nautical_daylight
+    - astronomical_daylight
+    - night
+    - civil_night
+    - nautical_night
+    - astronomical_night
+    - elevation
+    - min_elevation
+    - max_elevation

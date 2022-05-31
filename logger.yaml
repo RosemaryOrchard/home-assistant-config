@@ -1,0 +1,8 @@
+default: error
+# logs:
+# homeassistant.components.rest_command: debug
+# libdyson: debug
+# custom_components.dyson_local: debug
+# custom_components.dyson_cloud: debug
+# custom_components.grocy: debug
+# homeassistant.components.mqtt: debug

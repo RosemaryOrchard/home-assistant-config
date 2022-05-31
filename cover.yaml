@@ -1,0 +1,125 @@
+- platform: template
+  covers:
+    bedroom_curtain:
+      unique_id: bedroom_curtains
+      device_class: curtain
+      icon_template: >-
+        {% if (states('sensor.switchbot_bedroom_curtain') | int) < 90 %}
+          mdi:curtains
+        {% else %}
+          mdi:curtains-closed
+        {% endif %}
+      friendly_name: "Bedroom Curtains"
+      position_template: "{{ float(states('sensor.switchbot_bedroom_curtain') | default(0)) }}"
+      open_cover:
+        service: rest_command.switchbot_device_command
+        data:
+          deviceId: !secret switchbot_bedroom_deviceId
+          command: "turnOn"
+      close_cover:
+        service: rest_command.switchbot_device_command
+        data:
+          deviceId: !secret switchbot_bedroom_deviceId
+          command: "turnOff"
+      stop_cover:
+        service: rest_command.switchbot_device_command
+        data:
+          deviceId: !secret switchbot_bedroom_deviceId
+          command: "turnOff"
+      set_cover_position:
+        service: rest_command.switchbot_device_command
+        data:
+          deviceId: !secret switchbot_bedroom_deviceId
+          command: "setPosition"
+          parameter: "0,ff,{{100-position}}"
+    office_curtain:
+      unique_id: office_curtains
+      device_class: curtain
+      icon_template: >-
+        {% if (states('sensor.switchbot_office_curtain') | int) < 90 %}
+          mdi:curtains
+        {% else %}
+          mdi:curtains-closed
+        {% endif %}
+      friendly_name: "Office Curtains"
+      position_template: "{{ float(states('sensor.switchbot_office_curtain') | default(0)) }}"
+      open_cover:
+        service: rest_command.switchbot_device_command
+        data:
+          deviceId: !secret switchbot_office_deviceId
+          command: "turnOn"
+      close_cover:
+        service: rest_command.switchbot_device_command
+        data:
+          deviceId: !secret switchbot_office_deviceId
+          command: "turnOff"
+      stop_cover:
+        service: rest_command.switchbot_device_command
+        data:
+          deviceId: !secret switchbot_office_deviceId
+          command: "turnOff"
+      set_cover_position:
+        service: rest_command.switchbot_device_command
+        data:
+          deviceId: !secret switchbot_office_deviceId
+          command: "setPosition"
+          parameter: "0,ff,{{100-position}}"
+    lounge_curtain:
+      unique_id: lounge_curtain
+      device_class: curtain
+      icon_template: >-
+        {% if (states('sensor.switchbot_lounge_curtain') | int) < 90 %}
+          mdi:curtains
+        {% else %}
+          mdi:curtains-closed
+        {% endif %}
+      friendly_name: "Living Room Curtains"
+      position_template: "{{ float(states('sensor.switchbot_lounge_curtain') | default(0)) }}"
+      open_cover:
+        service: rest_command.switchbot_device_command
+        data:
+          deviceId: !secret switchbot_lounge_deviceId
+          command: "turnOn"
+      close_cover:
+        service: rest_command.switchbot_device_command
+        data:
+          deviceId: !secret switchbot_lounge_deviceId
+          command: "turnOff"
+      set_cover_position:
+        service: rest_command.switchbot_device_command
+        data:
+          deviceId: !secret switchbot_lounge_deviceId
+          command: "setPosition"
+          parameter: "0,ff,{{100-position}}"
+    hall_curtain:
+      unique_id: hall_curtain
+      device_class: curtain
+      icon_template: >-
+        {% if (states('sensor.switchbot_hall_curtain') | int) < 90 %}
+          mdi:curtains
+        {% else %}
+          mdi:curtains-closed
+        {% endif %}
+      friendly_name: "Front Door Curtain"
+      position_template: "{{ float(states('sensor.switchbot_hall_curtain') | default(0)) }}"
+      open_cover:
+        service: rest_command.switchbot_device_command
+        data:
+          deviceId: !secret switchbot_hall_deviceId
+          command: "turnOn"
+      close_cover:
+        service: rest_command.switchbot_device_command
+        data:
+          deviceId: !secret switchbot_hall_deviceId
+          command: "turnOff"
+      stop_cover:
+        service: rest_command.switchbot_device_command
+        data:
+          deviceId: !secret switchbot_hall_deviceId
+          command: "turnOff"
+      set_cover_position:
+        service: rest_command.switchbot_device_command
+        data:
+          deviceId: !secret switchbot_hall_deviceId
+          command: "setPosition"
+          parameter: "0,ff,{{100-position}}"

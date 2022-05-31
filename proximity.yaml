@@ -1,0 +1,6 @@
+home:
+  zone: 'home'
+  devices:
+    - person.rosemary_orchard
+  tolerance: 50
+  unit_of_measurement: mi

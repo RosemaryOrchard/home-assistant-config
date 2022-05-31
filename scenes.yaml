@@ -1,0 +1,347 @@
+- id: '1637245975886'
+  name: Podcasting Lights
+  entities:
+    light.go:
+      min_mireds: 153
+      max_mireds: 500
+      supported_color_modes:
+      - color_temp
+      - xy
+      color_mode: xy
+      brightness: 255
+      hs_color:
+      - 255.685
+      - 94.51
+      rgb_color:
+      - 77
+      - 14
+      - 255
+      xy_color:
+      - 0.162
+      - 0.053
+      mode: normal
+      dynamics: none
+      icon: mdi:lamp-outline
+      friendly_name: Go
+      supported_features: 40
+      state: 'on'
+    light.iris:
+      supported_color_modes:
+      - xy
+      color_mode: xy
+      brightness: 255
+      hs_color:
+      - 298.378
+      - 72.549
+      rgb_color:
+      - 250
+      - 70
+      - 255
+      xy_color:
+      - 0.3751
+      - 0.1657
+      mode: normal
+      dynamics: none
+      icon: mdi:lamp
+      friendly_name: Iris
+      supported_features: 40
+      state: 'on'
+    light.smart_wi_fi_light_strip_msl320c_main_channel:
+      supported_color_modes:
+      - hs
+      color_mode: hs
+      brightness: 252.45
+      hs_color:
+      - 284.706
+      - 100
+      rgb_color:
+      - 190
+      - 0
+      - 255
+      xy_color:
+      - 0.299
+      - 0.115
+      icon: mdi:led-strip-variant
+      friendly_name: Office Bookshelf Lights
+      supported_features: 17
+      state: 'on'
+    light.lava_lamp:
+      icon: mdi:lava-lamp
+      friendly_name: Lava Lamp
+      state: 'on'
+  icon: mdi:text-to-speech
+- id: '1637246066705'
+  name: Work Background Lighting
+  entities:
+    light.go:
+      min_mireds: 153
+      max_mireds: 500
+      supported_color_modes:
+      - color_temp
+      - xy
+      color_mode: xy
+      brightness: 255
+      hs_color:
+      - 29.589
+      - 28.627
+      rgb_color:
+      - 255
+      - 218
+      - 182
+      xy_color:
+      - 0.397
+      - 0.363
+      mode: normal
+      dynamics: none
+      icon: mdi:lamp-outline
+      friendly_name: Go
+      supported_features: 40
+      state: 'on'
+    light.iris:
+      supported_color_modes:
+      - xy
+      color_mode: xy
+      brightness: 255
+      hs_color:
+      - 29.589
+      - 28.627
+      rgb_color:
+      - 255
+      - 218
+      - 182
+      xy_color:
+      - 0.397
+      - 0.363
+      mode: normal
+      dynamics: none
+      icon: mdi:lamp
+      friendly_name: Iris
+      supported_features: 40
+      state: 'on'
+    light.smart_wi_fi_light_strip_msl320c_main_channel:
+      supported_color_modes:
+      - hs
+      color_mode: hs
+      brightness: 247.35
+      hs_color:
+      - 29.589
+      - 28.627
+      rgb_color:
+      - 255
+      - 218
+      - 182
+      xy_color:
+      - 0.397
+      - 0.363
+      icon: mdi:led-strip-variant
+      friendly_name: Office Bookshelf Lights
+      supported_features: 17
+      state: 'on'
+    light.lava_lamp:
+      icon: mdi:lava-lamp
+      friendly_name: Lava Lamp
+      state: 'on'
+  icon: mdi:account-group
+- id: '1637883108135'
+  name: Living Room Dimmed
+  entities:
+    light.living_room_main_lights:
+      min_mireds: 153
+      max_mireds: 454
+      effect_list:
+      - None
+      - blink
+      - breathe
+      - candle
+      - channel_change
+      - finish_effect
+      - okay
+      - stop_effect
+      supported_color_modes:
+      - color_temp
+      color_mode: color_temp
+      brightness: 23
+      color_temp: 352
+      hs_color:
+      - 28.109
+      - 61.425
+      rgb_color:
+      - 255
+      - 171
+      - 98
+      xy_color:
+      - 0.512
+      - 0.385
+      effect: None
+      entity_id:
+      - light.living_room_overhead
+      - light.uplighter
+      icon: mdi:lightbulb-group
+      friendly_name: Living Room Main Lights
+      supported_features: 44
+      state: 'on'
+    light.uplighter:
+      min_mireds: 250
+      max_mireds: 454
+      effect_list:
+      - blink
+      - breathe
+      - okay
+      - channel_change
+      - finish_effect
+      - stop_effect
+      supported_color_modes:
+      - color_temp
+      color_mode: color_temp
+      brightness: 23
+      color_temp: 352
+      hs_color:
+      - 28.109
+      - 61.425
+      rgb_color:
+      - 255
+      - 171
+      - 98
+      xy_color:
+      - 0.512
+      - 0.385
+      linkquality: 42
+      power_on_behavior:
+      update:
+        state: idle
+      update_available: false
+      icon: mdi:floor-lamp-torchiere
+      friendly_name: Uplighter
+      supported_features: 47
+      state: 'on'
+    select.uplighter_power_on_behavior:
+      options:
+      - 'off'
+      - previous
+      - 'on'
+      brightness: 23
+      color_mode: color_temp
+      color_temp: 352
+      linkquality: 42
+      power_on_behavior:
+      update:
+        state: idle
+      update_available: false
+      icon: mdi:power-settings
+      friendly_name: Uplighter power on behavior
+      state: unknown
+  icon: mdi:filmstrip
+- id: '1639511654238'
+  name: 'Living Room: Ready to Open the Door'
+  entities:
+    cover.vertical_blind:
+      current_position: 100
+      icon: mdi:window-shutter-alert
+      friendly_name: Vertical Blind
+      supported_features: 15
+      state: open
+    cover.vertical_rotate:
+      current_position: 51
+      icon: mdi:window-open-variant
+      friendly_name: Vertical Rotate
+      supported_features: 15
+      device_class: blind
+      state: open
+    cover.lounge_curtain:
+      device_class: curtain
+      friendly_name: Living Room Curtains
+      supported_features: 15
+      state: open
+- id: '1642360969985'
+  name: Bedside Lights Warm White
+  entities:
+    light.bedside_lights:
+      min_mireds: 250
+      max_mireds: 454
+      supported_color_modes:
+      - color_temp
+      - hs
+      color_mode: hs
+      brightness: 254
+      hs_color:
+      - 29.999
+      - 71.427
+      rgb_color:
+      - 255
+      - 163
+      - 72
+      xy_color:
+      - 0.54
+      - 0.393
+      entity_id:
+      - light.bed_left
+      - light.bed_right
+      icon: mdi:lightbulb-group
+      friendly_name: Bedside Lights
+      supported_features: 32
+      state: 'on'
+- id: '1642595559904'
+  name: Alarm Clock Lights
+  entities:
+    light.bed_left:
+      min_mireds: 250
+      max_mireds: 454
+      supported_color_modes:
+      - color_temp
+      - hs
+      color_mode: hs
+      brightness: 254
+      hs_color:
+      - 29.718
+      - 83.656
+      rgb_color:
+      - 255
+      - 147
+      - 41
+      xy_color:
+      - 0.577
+      - 0.388
+      friendly_name: Bed Left
+      supported_features: 51
+      state: 'on'
+    light.bed_right:
+      min_mireds: 250
+      max_mireds: 454
+      supported_color_modes:
+      - color_temp
+      - hs
+      color_mode: hs
+      brightness: 252
+      hs_color:
+      - 29.79
+      - 84.552
+      rgb_color:
+      - 255
+      - 146
+      - 39
+      xy_color:
+      - 0.579
+      - 0.388
+      friendly_name: Bed Right
+      supported_features: 51
+      state: 'on'
+    light.smart_led_light_strip_under_bed:
+      supported_color_modes:
+      - hs
+      color_mode: hs
+      brightness: 252.45
+      hs_color:
+      - 29.863
+      - 85.882
+      rgb_color:
+      - 255
+      - 145
+      - 36
+      xy_color:
+      - 0.581
+      - 0.388
+      icon: mdi:led-strip-variant
+      friendly_name: Under Bed Lights
+      supported_features: 17
+      state: 'on'
+  icon: mdi:alarm

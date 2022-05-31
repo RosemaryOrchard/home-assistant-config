@@ -1,0 +1,25 @@
+- name: Log File
+  platform: file
+  filename: log-data.txt
+  timestamp: true
+- name: Pushcut Notification
+  platform: rest
+  headers:
+    API-KEY: !secret pushcut_api
+  resource: https://api.pushcut.io/notifications/Home%20Assistant%20Notification
+  data:
+    text: "world"
+    title: "hello"
+- name: Pushover
+  platform: pushover
+  api_key: !secret pushover_api
+  user_key: !secret pushover_user
+- platform: telegram
+  name: Telegram
+  chat_id: !secret telegram_chat_id
+- name: Standard
+  platform: group
+  services:
+    - service: mobile_app_kitchen_ipad
+    - service: mobile_app_rosemarys_iphone_13_pro
+    - service: log_file

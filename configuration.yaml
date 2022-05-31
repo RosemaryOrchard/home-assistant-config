@@ -1,0 +1,42 @@
+# Configure a default setup of Home Assistant (frontend, api, etc)
+default_config:
+
+# Text to speech
+tts:
+  - platform: google_translate
+
+homeassistant:
+  customize: !include customize.yaml
+http:
+  use_x_forwarded_for: true
+  trusted_proxies:
+    - !secret ha_ip_address
+automation: !include automations.yaml
+binary_sensor: !include binary_sensor.yaml
+calendar: !include caldav.yaml
+camera: !include camera.yaml
+climate: !include climate.yaml
+cover: !include cover.yaml
+eufy_vacuum: !include eufy_vacuum.yaml
+frontend:
+  themes: !include_dir_merge_named themes
+generic_hygrostat: !include hygrostat.yaml
+group: !include groups.yaml
+homekit: !include homekit.yaml
+influxdb: !include influxdb.yaml
+logger: !include logger.yaml
+media_player: !include media_player.yaml
+notify: !include notify.yaml
+proximity: !include proximity.yaml
+recorder:
+  db_url: !secret mysql_connect
+rest_command: !include rest_command.yaml
+scene: !include scenes.yaml
+script: !include scripts.yaml
+sensor: !include sensor.yaml
+switch: !include switch.yaml
+telegram_bot: !include telegram.yaml
+template: !include template.yaml
+utility_meter: !include utility_meter.yaml
+webhook_service:
+withings: !include withings.yaml

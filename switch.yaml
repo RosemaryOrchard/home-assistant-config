@@ -1,0 +1,8 @@
+- platform: flux
+  lights:
+    - light.bedroom_overhead
+    - light.bedside
+    - light.hallway_overhead
+    - light.living_room_overhead
+    - light.office_overhead
+    - light.uplighter

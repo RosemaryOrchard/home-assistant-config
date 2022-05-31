@@ -1,0 +1,12 @@
+daily_energy:
+  source: sensor.frient_energy_meter_reader_energy
+  name: Daily Energy
+  cycle: daily
+weekly_energy:
+  source: sensor.frient_energy_meter_reader_energy
+  name: Weekly Energy
+  cycle: weekly
+monthly_energy:
+  source: sensor.frient_energy_meter_reader_energy
+  name: Monthly Energy
+  cycle: monthly

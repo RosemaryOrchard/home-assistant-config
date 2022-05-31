@@ -1,0 +1,49 @@
+filter:
+  include_entity_globs:
+    - binary_sensor.*_occupied
+  include_entities:
+    - binary_sensor.3d_printer_smoke_alarm_smoke
+    - binary_sensor.smoke_detector
+    - binary_sensor.front_door_lock_battery_low
+    - binary_sensor.patio_door_right_battery_low
+    - climate.bedroom_thermostat
+    - climate.hallway
+    - climate.living_room
+    - climate.office_thermostat
+    - cover.bedroom_curtain
+    - cover.hall_curtain
+    - cover.lounge_curtain
+    - cover.office_curtain
+    - cover.vertical_open
+    - cover.vertical_rotate
+    - humidifier.hallway_humidity_control
+    - input_boolean.homekit_alarm
+    - input_boolean.logic_asleep
+    - script.getting_up
+    - input_button.homekit_going_out_scene
+    - input_button.homekit_getting_up_scene
+    - light.bathroom
+    - light.bedroom_door_bedside_light
+    - light.bedroom_window_bedside_light
+    - light.lava_lamp
+    - light.kitchen
+    - light.reading_light
+    - light.shelf_lights
+    - light.uplighter
+    - light.3d_printer_lights
+    - lock.front_door_lock
+    - lock.main_door
+    - lock.patio_door_right
+    - scene.podcasting_lights
+    - scene.work_background_lighting
+    - sensor.bedroom_light_sensor_illuminance_lux
+    - sensor.front_door_battery
+    - sensor.kitchen_light_sensor_illuminance_lux
+    - sensor.living_room_light_sensor_illuminance_lux
+    - sensor.office_light_sensor_illuminance_lux
+    - sensor.patio_door_battery
+    - switch.bedroom_air_purifier_power
+    - switch.electric_blanket
+entity_config:
+  script.open_living_room_blinds:
+    name: Going Out

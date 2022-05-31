@@ -1,0 +1,7 @@
+people:
+  name: People
+  entities:
+    - person.rosemary_orchard
+    - person.dad
+    - person.mum
+    - person.guest

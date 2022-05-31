@@ -1,0 +1,16 @@
+- platform: generic_thermostat
+  unique_id: bedroom_thermostat
+  name: Bedroom Thermostat
+  heater: switch.bedroom_heater
+  target_sensor: sensor.netatmo_bedroom_temperature
+  away_temp: 12
+  max_temp: 25
+  min_temp: 10
+- platform: generic_thermostat
+  unique_id: office_thermostat
+  name: Office Thermostat
+  heater: switch.office_heater
+  target_sensor: sensor.netatmo_queens_square_station_additional_smart_indoor_module_temperature
+  away_temp: 12
+  max_temp: 25
+  min_temp: 10

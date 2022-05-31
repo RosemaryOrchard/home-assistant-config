@@ -1,0 +1,6 @@
+devices:
+  - name: Buttercup the Robovac
+    address: !secret eufy_vacuum_access
+    access_token: !secret eufy_vacuum_address
+    id: !secret eufy_vacuum_id
+    type: T2118

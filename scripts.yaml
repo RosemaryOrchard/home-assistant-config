@@ -1,0 +1,605 @@
+disable_alarm_if_not_at_home:
+  alias: Disable Alarm if not at Home
+  sequence:
+  - condition: device
+    device_id: 5a08decc8303df6acf42c1e6cfac8d64
+    domain: device_tracker
+    entity_id: device_tracker.rosemarys_iphone_13_pro
+    type: is_not_home
+  - service: input_boolean.turn_off
+    target:
+      entity_id: input_boolean.alarm_clock
+  mode: single
+  icon: mdi:alarm-note-off
+heating_pad_heat:
+  alias: 'Heating Pad: Heat'
+  sequence:
+  - condition: state
+    entity_id: binary_sensor.a_heating_pad_is_on
+    state: 'on'
+  - choose:
+    - conditions:
+      - condition: state
+        entity_id: input_select.heating_pad_selector
+        state: Living Room
+      sequence:
+      - type: turn_on
+        device_id: 9e16330576df742cd97c19c54903c753
+        entity_id: switch.living_room_heating_pad
+        domain: switch
+    - conditions:
+      - condition: state
+        entity_id: input_select.heating_pad_selector
+        state: Office
+      sequence:
+      - type: turn_on
+        device_id: 05f9d774781e4f52c40234fa4a9ef75b
+        entity_id: switch.heating_pad
+        domain: switch
+    default: []
+  - service: input_datetime.set_datetime
+    target:
+      entity_id: input_datetime.heating_pad_time_change
+    data:
+      timestamp: '{{ as_timestamp(now() + timedelta( minutes = 30 )) }}'
+  - service: input_select.select_first
+    target:
+      entity_id: input_select.heating_pad_state
+  mode: single
+heating_pad_pause:
+  alias: 'Heating Pad: Pause'
+  sequence:
+  - condition: state
+    entity_id: binary_sensor.a_heating_pad_is_on
+    state: 'on'
+  - choose:
+    - conditions:
+      - condition: state
+        entity_id: input_select.heating_pad_selector
+        state: Living Room
+      sequence:
+      - type: turn_off
+        device_id: 9e16330576df742cd97c19c54903c753
+        entity_id: switch.living_room_heating_pad
+        domain: switch
+    - conditions:
+      - condition: state
+        entity_id: input_select.heating_pad_selector
+        state: Office
+      sequence:
+      - type: turn_off
+        device_id: 05f9d774781e4f52c40234fa4a9ef75b
+        entity_id: switch.heating_pad
+        domain: switch
+    default: []
+  - service: input_datetime.set_datetime
+    target:
+      entity_id: input_datetime.heating_pad_time_change
+    data:
+      timestamp: '{{ as_timestamp(now() + timedelta( minutes = 1 )) }}'
+  - service: input_select.select_last
+    target:
+      entity_id: input_select.heating_pad_state
+  mode: single
+time_to_sleep:
+  alias: Time to Sleep
+  sequence:
+  - service: input_select.select_option
+    data:
+      option: Sleep
+    target:
+      entity_id: input_select.rose_state
+  - service: light.turn_off
+    data: {}
+    target:
+      area_id:
+      - hallway
+      - office
+      - living_room
+      - bathroom
+      - kitchen
+      - christmas
+      entity_id:
+      - light.bedroom_overhead
+  - service: switch.turn_off
+    target:
+      device_id:
+      - fecce10ba5aa6f2d37f488bb65bcaf30
+      entity_id:
+      - switch.office_heating_pad
+      - switch.living_room_heating_pad
+    data: {}
+  - service: input_boolean.turn_off
+    target:
+      entity_id:
+      - input_boolean.office_heating_pad_controller
+      - input_boolean.living_room_heating_pad_controller
+    data: {}
+  - service: climate.set_temperature
+    target:
+      entity_id:
+      - climate.bedroom_thermostat
+      - climate.office_thermostat
+      - climate.hallway
+      - climate.living_room
+    data:
+      temperature: 15
+  - service: humidifier.turn_off
+    data: {}
+    target:
+      entity_id: humidifier.hallway_humidity_control
+  - choose:
+    - conditions:
+      - condition: state
+        entity_id: input_select.electric_blanket_time_off_options
+        state: None
+      sequence:
+      - service: switch.turn_off
+        target:
+          entity_id:
+          - switch.electric_blanket_left
+          - switch.electric_blanket_right
+        data: {}
+    default: []
+  - service: light.turn_off
+    data:
+      transition: 60
+    target:
+      entity_id: light.bedside
+  - service: light.turn_off
+    data:
+      transition: 90
+    target:
+      device_id: cb0c08a4a64ac0fee60aca7d07b961c8
+  mode: single
+  icon: mdi:sleep
+sunset:
+  alias: Sunset
+  sequence:
+  - service: cover.close_cover
+    target:
+      entity_id:
+      - cover.bedroom_blind
+      - cover.bedroom_curtain
+      - cover.kitchen_blind
+      - cover.lounge_curtain
+      - cover.vertical_blind
+      - cover.vertical_rotate
+      - cover.office_blind
+      - cover.office_curtain
+  mode: single
+  icon: mdi:weather-sunset-down
+ready_for_bed:
+  alias: Ready for Bed
+  sequence:
+  - choose:
+    - conditions:
+      - condition: numeric_state
+        entity_id: weather.home
+        attribute: temperature
+        below: '12'
+      sequence:
+      - service: switch.turn_on
+        target:
+          entity_id:
+          - switch.electric_blanket_left
+          - switch.electric_blanket_right
+        data: {}
+      - service: input_datetime.set_datetime
+        target:
+          entity_id: input_datetime.electric_blanket_off
+        data:
+          datetime: '{{ (today_at() + timedelta(days=1, hours=6)) }}'
+      - service: input_select.select_first
+        target:
+          entity_id: input_select.electric_blanket_time_off_options
+        data: {}
+      - service: climate.set_temperature
+        target:
+          entity_id: climate.bedroom_thermostat
+        data:
+          temperature: 18
+    default: []
+  - service: light.turn_on
+    target:
+      device_id:
+      - 4a242dae2709985380da5d761e430897
+      - 9906bff70ee855d13775fa2371cea4d4
+      - 26af60adc8366ea2898b8bff264dbcf3
+    data:
+      brightness_pct: 75
+  mode: single
+  icon: mdi:bed
+open_living_room_blinds_rotate:
+  alias: 'Living Room Blinds: Rotate'
+  sequence:
+  - choose:
+    - conditions:
+      - condition: or
+        conditions:
+        - condition: numeric_state
+          entity_id: sun.sun
+          attribute: elevation
+          below: '3'
+        - condition: sun
+          before: sunrise
+        - condition: sun
+          after: sunset
+      sequence:
+      - service: cover.set_cover_position
+        data:
+          position: 100
+        target:
+          entity_id: cover.vertical_rotate
+    - conditions:
+      - condition: template
+        value_template: '{{ now() > as_datetime(states(''sensor.my_home_solar_noon''))
+          }}'
+      sequence:
+      - service: cover.set_cover_position
+        data:
+          position: 75
+        target:
+          entity_id: cover.vertical_rotate
+    default:
+    - service: cover.set_cover_position
+      data:
+        position: 25
+      target:
+        entity_id: cover.vertical_rotate
+  mode: single
+  icon: mdi:axis-z-rotate-clockwise
+all_lights_off:
+  alias: All Lights Off
+  sequence:
+  - service: light.turn_off
+    target:
+      area_id:
+      - christmas
+      - hallway
+      - living_room
+      - office
+    data: {}
+  mode: single
+  icon: mdi:lightbulb-off
+test_bedside_lights:
+  alias: Test Bedside Lights
+  sequence:
+  - service: light.turn_on
+    data:
+      color_name: red
+      brightness_pct: 1
+    target:
+      entity_id: light.bedside_lights
+  mode: single
+morning:
+  alias: Morning
+  sequence:
+  - service: cover.open_cover
+    target:
+      device_id:
+      - a88814ee3ea4b7a3f4f9810b97e1908c
+      - 8e2a36ae56f263d4df46cea35b5d483c
+      entity_id:
+      - cover.lounge_curtain
+      - cover.office_curtain
+    data: {}
+  - service: cover.set_cover_position
+    target:
+      device_id: 2cf922a4500093c4273a8e3851bb0998
+    data:
+      position: 60
+  - service: light.turn_on
+    data:
+      brightness_step_pct: 100
+      transition: 30
+    target:
+      entity_id: light.wake_up
+  - choose:
+    - conditions:
+      - condition: state
+        entity_id: input_select.rose_state
+        state: Sleep
+      sequence:
+      - service: input_select.select_option
+        data:
+          option: Home
+        target:
+          entity_id: input_select.rose_state
+    default: []
+  - service: script.check_to_run_dehumdifier
+    data: {}
+  - service: switch.turn_on
+    target:
+      entity_id: switch.bedroom_air_purifier_power
+    data: {}
+  mode: single
+  icon: mdi:weather-sunset-up
+reset_alarm_to_default:
+  alias: Reset Alarm to Default
+  sequence:
+  - service: input_datetime.set_datetime
+    target:
+      entity_id: input_datetime.alarm_time
+    data:
+      time: 08:30:00
+  - service: input_select.select_first
+    target:
+      entity_id: input_select.manual_alarm_setting
+    data: {}
+  mode: single
+check_to_run_dehumdifier:
+  alias: Check to run Dehumdifier
+  sequence:
+  - service: humidifier.turn_on
+    target:
+      entity_id: humidifier.hallway_humidity_control
+  - choose:
+    - conditions:
+      - condition: state
+        entity_id: binary_sensor.airer_contact
+        state: 'off'
+      sequence:
+      - service: humidifier.set_humidity
+        target:
+          entity_id: humidifier.hallway_humidity_control
+        data:
+          humidity: 40
+    default:
+    - service: humidifier.set_humidity
+      target:
+        entity_id: humidifier.hallway_humidity_control
+      data:
+        humidity: 50
+  mode: single
+  icon: mdi:air-humidifier-off
+start_podcasting:
+  alias: Start Podcasting
+  sequence:
+  - type: turn_off
+    device_id: c20a505d930b149e82bef170e68dba8c
+    entity_id: switch.dehumidifier_outlet
+    domain: switch
+  mode: single
+end_podcasting:
+  alias: End Podcasting
+  sequence:
+  - service: script.check_to_run_dehumdifier
+    data: {}
+  mode: single
+  icon: mdi:microphone-off
+open_living_room_blinds:
+  alias: 'Living Room Blinds: Open'
+  sequence:
+  - service: cover.set_cover_position
+    target:
+      entity_id: cover.vertical_rotate
+    data:
+      position: 50
+  - wait_template: '{{ is_state(''cover.vertical_rotate'', 50) }}'
+    timeout: '10'
+    continue_on_timeout: true
+  - service: cover.open_cover
+    target:
+      entity_id:
+      - cover.lounge_curtain
+      - cover.vertical_open
+    data: {}
+  mode: single
+  icon: mdi:curtains
+all_heating_to_15:
+  alias: All Heating to 15
+  sequence:
+  - service: climate.turn_on
+    target:
+      entity_id:
+      - climate.bedroom_thermostat
+      - climate.hallway
+      - climate.living_room
+      - climate.office_thermostat
+    data: {}
+  - service: climate.set_temperature
+    target:
+      entity_id:
+      - climate.bedroom_thermostat
+      - climate.hallway
+      - climate.living_room
+      - climate.office_thermostat
+    data:
+      temperature: 15
+  mode: single
+  icon: mdi:fast-forward-15
+'1642870456606':
+  alias: 'Living Room Blinds: Close'
+  sequence:
+  - service: cover.close_cover
+    data: {}
+    target:
+      entity_id: cover.vertical_open
+  - wait_template: '{{ is_state(''cover.vertical_open'', ''off'') }}'
+    timeout: '10'
+    continue_on_timeout: true
+  - service: script.open_living_room_blinds_rotate
+    data: {}
+  - condition: state
+    entity_id: binary_sensor.living_room_is_dark
+    state: 'on'
+  - service: cover.close_cover
+    target:
+      entity_id:
+      - cover.lounge_curtain
+    data: {}
+  mode: single
+  icon: mdi:curtains-closed
+run_the_robot_vacuum_today:
+  alias: Run the Robot Vacuum Today
+  sequence:
+  - condition: template
+    value_template: '{{ as_timestamp(states(''input_datetime.buttercup_cleaned''))
+      < as_timestamp(today_at()) }}'
+  - service: vacuum.start
+    target:
+      entity_id: vacuum.buttercup
+  mode: single
+getting_up:
+  alias: Getting Up
+  sequence:
+  - service: script.open_living_room_blinds_rotate
+    data: {}
+  - service: cover.open_cover
+    data: {}
+    target:
+      device_id: 2cf922a4500093c4273a8e3851bb0998
+      entity_id:
+      - cover.bedroom_curtain
+      - cover.lounge_curtain
+      - cover.office_curtain
+  - service: light.turn_off
+    data: {}
+    target:
+      area_id: bedroom
+  mode: single
+  icon: mdi:weather-sunset-up
+'1647054809832':
+  alias: Time to Sleep (Almost)
+  sequence:
+  - service: input_select.select_option
+    data:
+      option: Sleep
+    target:
+      entity_id: input_select.rose_state
+  - service: light.turn_off
+    data: {}
+    target:
+      area_id:
+      - hallway
+      - office
+      - living_room
+      entity_id:
+      - light.bedroom_overhead
+      - light.kitchen_light
+      - light.bathroom_light
+      device_id: ddfafc2f1445a985418adcc8f9c8ee76
+  - service: switch.turn_off
+    target:
+      device_id:
+      - fecce10ba5aa6f2d37f488bb65bcaf30
+      entity_id:
+      - switch.office_heating_pad
+      - switch.living_room_heating_pad
+    data: {}
+  - service: input_boolean.turn_off
+    target:
+      entity_id:
+      - input_boolean.office_heating_pad_controller
+      - input_boolean.living_room_heating_pad_controller
+    data: {}
+  - service: climate.set_temperature
+    target:
+      entity_id:
+      - climate.bedroom_thermostat
+      - climate.office_thermostat
+      - climate.hallway
+      - climate.living_room
+    data:
+      temperature: 15
+  - service: humidifier.turn_off
+    data: {}
+    target:
+      entity_id: humidifier.hallway_humidity_control
+  - choose:
+    - conditions:
+      - condition: state
+        state: 'On'
+        entity_id: switch.electric_blanket
+      - condition: state
+        entity_id: input_select.electric_blanket_time_off_options
+        state: None
+      sequence:
+      - service: input_select.select_next
+        data: {}
+        target:
+          entity_id: input_select.electric_blanket_time_off_options
+    default: []
+  mode: single
+  icon: mdi:sleep
+leaving_home:
+  alias: Leaving Home
+  sequence:
+  - service: light.turn_off
+    data: {}
+    target:
+      area_id:
+      - office
+      - living_room
+      - hallway
+      - christmas
+      - bedroom
+  - service: climate.set_temperature
+    data:
+      temperature: 15
+    target:
+      entity_id:
+      - climate.bedroom_thermostat
+      - climate.hallway
+      - climate.living_room
+      - climate.office_thermostat
+  mode: single
+  icon: mdi:shield-home
+showering:
+  alias: Showering
+  sequence:
+  - service: script.1642870456606
+    data: {}
+  - service: cover.close_cover
+    data: {}
+    target:
+      entity_id: cover.bedroom_curtain
+  - service: light.turn_on
+    data:
+      brightness_pct: 100
+    target:
+      device_id: 467a95e8ab7964b7124732b73c887555
+  - service: media_player.play_media
+    target:
+      entity_id: media_player.sonos_roam
+    data:
+      media_content_id: FV:2/2
+      media_content_type: favorite_item_id
+    metadata:
+      title: Favs
+      thumbnail: https://is4-ssl.mzstatic.com/image/thumb/Features71/v4/54/5c/fa/545cfaf4-1c30-a8ae-9e14-627c4b409843/source/400x400bb.jpeg
+      media_class: playlist
+      children_media_class:
+      navigateIds:
+      - {}
+      - media_content_type: favorites
+        media_content_id: ''
+      - media_content_type: favorites_folder
+        media_content_id: object.container.playlistContainer
+  mode: single
+  icon: mdi:shower-head
+'1651066903184':
+  sequence:
+  - repeat:
+      while:
+      - condition: not
+        conditions:
+        - condition: state
+          entity_id: cover.bedroom_blind
+          attribute: current_position
+          state: '100'
+      sequence:
+      - service: cover.set_cover_position
+        data:
+          position: '{{ (state_attr(''cover.bedroom_blind'', ''current_position'')
+            | int) + 10 }}'
+        target:
+          device_id: 8e2a36ae56f263d4df46cea35b5d483c
+      - delay:
+          hours: 0
+          minutes: 1
+          seconds: 0
+          milliseconds: 0
+  mode: single
+  alias: Slowly open bedroom blind

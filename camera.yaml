@@ -1,0 +1,5 @@
+- platform: generic
+  name: 3D Printer
+  still_image_url: !secret octoprint_still_image
+  stream_source: !secret octoprint_stream_source
+  verify_ssl: false

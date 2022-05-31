@@ -1,0 +1,25 @@
+switchbot_device_command:
+  url: "https://api.switch-bot.com/v1.0/devices/{{ deviceId }}/commands"
+  method: post
+  content_type: "application/json"
+  headers:
+    Authorization: !secret switchbot_api
+  payload: '{"command": "{{ command }}","parameter": "{{ parameter }}"}'
+switchbot_irdevice_command:
+  url: "https://api.switch-bot.com/v1.0/devices/{{ deviceId }}/commands"
+  method: post
+  content_type: "application/json"
+  headers:
+    Authorization: !secret switchbot_api
+  payload: '{"command": "{{ command }}","parameter": "default", "commandType": "customize"}'
+pushcut_automation:
+  url: "https://api.pushcut.io/execute?shortcut=Home%20Assistant%20Automations"
+  method: post
+  headers:
+    authorization: !secret pushcut_api
+    accept: "application/json, text/html"
+    user-agent: "Mozilla/5.0 {{ useragent }}"
+  payload: '{"input": "{{ input }}"}'
+  content_type: "application/json; charset=utf-8"
+alarm_clock_end_shortcut:
+  url: "https://api.pushcut.io/6i1205itekV-f_tA36bgZ/execute?shortcut=Morning%20Music"
