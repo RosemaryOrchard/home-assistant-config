@@ -34,6 +34,11 @@
     - unique_id: rose_is_state
       name: "Rose"
       state: "{{ states('input_select.rose_state') }}"
+    - name: Alarm Clock Timestamp
+      unique_id: alarm_clock_timestamp
+      device_class: timestamp
+      state: >
+        {{ today_at(states('input_datetime.alarm_time')) }}
 - binary_sensor:
     - name: Water Jug Filter Needs Replacing
       unique_id: water_jug_filter_needs_replacing
@@ -134,7 +139,7 @@
       state: >
         {% if is_state('media_player.philips_tv', 'on') %}
           {% if is_state('switch.harmony_hub_my_apple_tv', 'on') %}
-            {{ is_state('media_player.living_room_apple_tv', 'playing') }}
+            {{ is_state('media_player.living_room_apple_tv', 'playing') or is_state('media_player.apple_tv_plex', 'playing') }}
           {% else %}
             {{ is_state('media_player.philips_tv', 'on') }}
           {% endif %}
@@ -165,46 +170,102 @@
     - name: Rose Away from Home
       unique_id: rose_away
       state: "{{ not is_state('person.rosemary_orchard', 'home') }}"
+    - name: >
+        {% if is_state("input_boolean.logic_asleep", "on") %}
+          Asleep
+        {% else %}
+          Awake
+        {% endif %}
+      unique_id: asleep
+      state: "{{ is_state('input_boolean.logic_asleep', 'on') }}"
+      icon: >
+        {% if is_state("input_boolean.logic_asleep", "on") %}
+          mdi:sleep
+        {% else %}
+          mdi:sleep-off
+        {% endif %}
 - sensor:
     - name: "Average Living Room Temperature"
       unique_id: average_lounge_temperature
       unit_of_measurement: "°C"
       state: >
         {% set sensors = 'sensor.netatmo_queens_square_station_temperature', 'sensor.living_room_hue_sensor_temperature', 'sensor.living_room_door_temperature' %}
-        {{ expand(sensors) | rejectattr('state', 'eq', 'unavailable') | map(attribute='state') | map('float', none) | reject('eq', none) | list | average }}
+        {% set sensors = expand(sensors) | rejectattr('state', 'eq', 'unavailable') | map(attribute='state') | map('float', none) | reject('eq', none) | list %}
+        {% if sensors | length > 0 %}
+          {{ sensors | average }}
+        {% else %}
+          15
+        {% endif %}
     - name: "Average Hallway Temperature"
       unique_id: average_hall_temperature
       unit_of_measurement: "°C"
       state: >
         {% set sensors = 'sensor.hallway_climate_sensor_temperature', 'sensor.airer_temperature' %}
-        {{ expand(sensors) | rejectattr('state', 'eq', 'unavailable') | map(attribute='state') | map('float', none) | reject('eq', none) | list | average }}
+        {% set sensors = expand(sensors) | rejectattr('state', 'eq', 'unavailable') | map(attribute='state') | map('float', none) | reject('eq', none) | list %}
+        {% if sensors | length > 0 %}
+          {{ sensors | average }}
+        {% else %}
+          15
+        {% endif %}
     - name: "Average Office Temperature"
       unique_id: average_office_temperature
       unit_of_measurement: "°C"
       state: >
         {% set sensors = 'sensor.netatmo_queens_square_station_additional_smart_indoor_module_temperature', 'sensor.ble_temperature_office_clock', 'sensor.office_hue_sensor_temperature' %}
-        {{ expand(sensors) | rejectattr('state', 'eq', 'unavailable') | map(attribute='state') | map('float', none) | reject('eq', none) | list | average }}
+        {% set sensors = expand(sensors) | rejectattr('state', 'eq', 'unavailable') | map(attribute='state') | map('float', none) | reject('eq', none) | list %}
+        {% if sensors | length > 0 %}
+          {{ sensors | average }}
+        {% else %}
+          15
+        {% endif %}
     - name: "Average Bedroom Temperature"
       unique_id: average_bedroom_temperature
       unit_of_measurement: "°C"
       state: >
         {% set sensors = 'sensor.netatmo_bedroom_temperature', 'sensor.bedroom_hue_sensor_temperature' %}
-        {{ expand(sensors) | rejectattr('state', 'eq', 'unavailable') | map(attribute='state') | map('float', none) | reject('eq', none) | list | average }}
+        {% set sensors = expand(sensors) | rejectattr('state', 'eq', 'unavailable') | map(attribute='state') | map('float', none) | reject('eq', none) | list %}
+        {% if sensors | length > 0 %}
+          {{ sensors | average }}
+        {% else %}
+          15
+        {% endif %}
     - name: "Average Kitchen Temperature"
       unique_id: average_kitchen_temperature
       unit_of_measurement: "°C"
       state: >
         {% set sensors = 'sensor.kitchen_climate_sensor_temperature', 'sensor.kitchen_door_temperature', 'sensor.kitchen_motion_sensor_temperature' %}
-        {{ expand(sensors) | rejectattr('state', 'eq', 'unavailable') | map(attribute='state') | map('float', none) | reject('eq', none) | list | average }}
+        {% set sensors = expand(sensors) | rejectattr('state', 'eq', 'unavailable') | map(attribute='state') | map('float', none) | reject('eq', none) | list %}
+        {% if sensors | length > 0 %}
+          {{ sensors | average }}
+        {% else %}
+          15
+        {% endif %}
     - name: "Average Storage Cupboard Temperature"
       unique_id: average_storeroom_temperature
       unit_of_measurement: "°C"
       state: >
         {% set sensors = 'sensor.storage_cupboard_climate_sensor_temperature', 'sensor.storage_cupboard_door_sensor_temperature', 'sensor.storage_cupboard_flood_sensor_temperature' %}
-        {{ expand(sensors) | rejectattr('state', 'eq', 'unavailable') | map(attribute='state') | map('float', none) | reject('eq', none) | list | average }}
+        {% set sensors = expand(sensors) | rejectattr('state', 'eq', 'unavailable') | map(attribute='state') | map('float', none) | reject('eq', none) | list %}
+        {% if sensors | length > 0 %}
+          {{ sensors | average }}
+        {% else %}
+          15
+        {% endif %}
     - name: "Night Motion"
       unique_id: "night_motion"
       state: >
         {% set asleep = is_state('input_select.rose_state', 'Sleep') %} 
         {% set motion = is_state('binary_sensor.bedroom_door_under_bed_motion_sensor_occupancy', 'on') or is_state('binary_sensor.bedroom_window_under_bed_motion_sensor_occupancy', 'on') %}
         {{ asleep and motion }}
+    - name: "HA Uptime Seconds"
+      unique_id: uptime_seconds
+      state: >
+        {{ ( now() - states('sensor.uptime')|as_datetime ).seconds | default(60) }}
+    - name: "HA Uptime Minutes"
+      unique_id: uptime_minutes
+      state: >
+        {{ ((( now() - states('sensor.uptime')|as_datetime ).seconds / 60) | round) | default(1) }}
+    - name: "Grocy in 15 Minutes"
+      unique_id: "grocy_in_15"
+      state: >
+        {{ (now() + timedelta( minutes = 15 )).strftime('%Y-%m-%d %H:%M:%S') }}

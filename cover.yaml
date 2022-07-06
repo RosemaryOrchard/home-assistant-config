@@ -4,13 +4,13 @@
       unique_id: bedroom_curtains
       device_class: curtain
       icon_template: >-
-        {% if (states('sensor.switchbot_bedroom_curtain') | int) < 90 %}
+        {% if (states('sensor.switchbot_bedroom_curtain') | default(0) | int) < 90 %}
           mdi:curtains
         {% else %}
           mdi:curtains-closed
         {% endif %}
       friendly_name: "Bedroom Curtains"
-      position_template: "{{ float(states('sensor.switchbot_bedroom_curtain') | default(0)) }}"
+      position_template: "{{ states('sensor.switchbot_bedroom_curtain') | default(0) | float }}"
       open_cover:
         service: rest_command.switchbot_device_command
         data:
@@ -36,13 +36,13 @@
       unique_id: office_curtains
       device_class: curtain
       icon_template: >-
-        {% if (states('sensor.switchbot_office_curtain') | int) < 90 %}
+        {% if (states('sensor.switchbot_office_curtain') | default(0) | int) < 90 %}
           mdi:curtains
         {% else %}
           mdi:curtains-closed
         {% endif %}
       friendly_name: "Office Curtains"
-      position_template: "{{ float(states('sensor.switchbot_office_curtain') | default(0)) }}"
+      position_template: "{{ states('sensor.switchbot_office_curtain') | default(0) | float }}"
       open_cover:
         service: rest_command.switchbot_device_command
         data:
@@ -64,17 +64,17 @@
           deviceId: !secret switchbot_office_deviceId
           command: "setPosition"
           parameter: "0,ff,{{100-position}}"
-    lounge_curtain:
-      unique_id: lounge_curtain
+    bedroom_light_curtain:
+      unique_id: bedroom_light_curtain
       device_class: curtain
       icon_template: >-
-        {% if (states('sensor.switchbot_lounge_curtain') | int) < 90 %}
+        {% if (states('sensor.switchbot_bedroom_light_curtain') | default(0) | int) < 90 %}
           mdi:curtains
         {% else %}
           mdi:curtains-closed
         {% endif %}
-      friendly_name: "Living Room Curtains"
-      position_template: "{{ float(states('sensor.switchbot_lounge_curtain') | default(0)) }}"
+      friendly_name: "Bedroom Light Curtains"
+      position_template: "{{ states('sensor.switchbot_bedroom_light_curtain') | default(0) | float }}"
       open_cover:
         service: rest_command.switchbot_device_command
         data:
@@ -95,13 +95,13 @@
       unique_id: hall_curtain
       device_class: curtain
       icon_template: >-
-        {% if (states('sensor.switchbot_hall_curtain') | int) < 90 %}
+        {% if (states('sensor.switchbot_hall_curtain') | default(0) | int) < 90 %}
           mdi:curtains
         {% else %}
           mdi:curtains-closed
         {% endif %}
       friendly_name: "Front Door Curtain"
-      position_template: "{{ float(states('sensor.switchbot_hall_curtain') | default(0)) }}"
+      position_template: "{{ states('sensor.switchbot_hall_curtain') | default(0) | float }}"
       open_cover:
         service: rest_command.switchbot_device_command
         data:
@@ -123,3 +123,87 @@
           deviceId: !secret switchbot_hall_deviceId
           command: "setPosition"
           parameter: "0,ff,{{100-position}}"
+    patio_doors:
+      unique_id: patio_doors
+      device_class: garage
+      friendly_name: "Patio Doors"
+      value_template: "{{ is_state('lock.patio_door_left', 'locked') and is_state('lock.patio_door_right', 'locked') | iif('closed', 'open') }}"
+      open_cover:
+        service: script.patio_door_unlock_as_garage
+      close_cover:
+        service: lock.lock
+        target:
+          entity_id:
+            - lock.patio_door_left
+            - lock.patio_door_right
+    patio_blinds:
+      device_class: window
+      unique_id: patio_blinds
+      friendly_name: "Patio Blinds"
+      open_cover:
+        service: script.open_living_room_blinds
+      close_cover:
+        service: script.1642870456606
+        data:
+          modus: "close"
+      stop_cover:
+        service: cover.stop_cover
+        target:
+          entity_id:
+            - cover.vertical_open
+            - cover.vertical_rotate
+      set_cover_position:
+        service: cover.set_cover_position
+        data:
+          position: "{{position}}"
+        target:
+          entity_id:
+            - cover.vertical_open
+      set_cover_tilt_position:
+        service: cover.set_cover_position
+        data:
+          position: "{{tilt}}"
+        target:
+          entity_id:
+            - cover.vertical_rotate
+      value_template: "{{is_state('cover.vertical_open', 'open')}}"
+      tilt_template: "{{states('cover.vertical_rotate') | default(50)}}"
+      icon_template: >-
+        {% if is_state('cover.vertical_open', 'open') %}
+          mdi:door-sliding
+        {% else %}
+          mdi:blinds-vertical-closed
+        {% endif %}
+    homekit_vertical_rotate:
+      device_class: window
+      unique_id: homekit_vertical_rotate
+      friendly_name: "Patio Blind Vertical Rotate"
+      open_cover:
+        service: cover.open_cover
+        target:
+          entity_id:
+            - cover.vertical_rotate
+      close_cover:
+        service: cover.close_cover
+        target:
+          entity_id:
+            - cover.vertical_rotate
+      stop_cover:
+        service: cover.stop_cover
+        target:
+          entity_id:
+            - cover.vertical_rotate
+      set_cover_tilt_position:
+        service: cover.set_cover_position
+        data:
+          position: "{{tilt}}"
+        target:
+          entity_id:
+            - cover.vertical_rotate
+      value_template: "{{is_state('cover.vertical_open', 'open')}}"
+      icon_template: >-
+        {% if is_state('cover.vertical_open', 'open') %}
+          mdi:door-sliding
+        {% else %}
+          mdi:blinds-vertical-closed
+        {% endif %}

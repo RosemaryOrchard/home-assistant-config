@@ -14,3 +14,9 @@
   away_temp: 12
   max_temp: 25
   min_temp: 10
+# - platform: homewizard
+#   name: Princess Fan
+#   host: 192.168.4.22
+#   password: qzx5fP2ysVqw
+#   # not sure if this works:
+#   scan_interval: 10

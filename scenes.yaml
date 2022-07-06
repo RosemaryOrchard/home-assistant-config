@@ -1,12 +1,21 @@
 - id: '1637245975886'
-  name: Podcasting Lights
+  name: Decorative Office Lights
   entities:
     light.go:
       min_mireds: 153
       max_mireds: 500
+      effect_list:
+      - None
+      - candle
+      - fire
       supported_color_modes:
       - color_temp
       - xy
+      mode: normal
+      dynamics: none
+      icon: mdi:lamp-outline
+      friendly_name: Go
+      supported_features: 44
       color_mode: xy
       brightness: 255
       hs_color:
@@ -19,57 +28,100 @@
       xy_color:
       - 0.162
       - 0.053
-      mode: normal
-      dynamics: none
-      icon: mdi:lamp-outline
-      friendly_name: Go
-      supported_features: 40
+      effect: None
       state: 'on'
     light.iris:
       supported_color_modes:
       - xy
-      color_mode: xy
-      brightness: 255
-      hs_color:
-      - 298.378
-      - 72.549
-      rgb_color:
-      - 250
-      - 70
-      - 255
-      xy_color:
-      - 0.3751
-      - 0.1657
       mode: normal
       dynamics: none
       icon: mdi:lamp
       friendly_name: Iris
       supported_features: 40
+      color_mode: xy
+      brightness: 255
+      hs_color:
+      - 298.075
+      - 73.333
+      rgb_color:
+      - 249
+      - 68
+      - 255
+      xy_color:
+      - 0.3735
+      - 0.1643
       state: 'on'
-    light.smart_wi_fi_light_strip_msl320c_main_channel:
+    light.lava_lamp:
+      supported_color_modes:
+      - onoff
+      icon: mdi:lava-lamp
+      friendly_name: Lava Lamp
+      supported_features: 0
+      color_mode: onoff
+      state: 'on'
+    light.bookcase_light:
+      effect_list:
+      - Night
+      - Reading
+      - Working
+      - Relaxing
+      - Party
+      - Family
+      - Colorful
+      - Party
       supported_color_modes:
       - hs
-      color_mode: hs
-      brightness: 252.45
+      - rgb
+      friendly_name: Bookcase Light
+      supported_features: 4
+      icon: mdi:led-strip-variant
+      color_mode: rgb
+      brightness: 255
       hs_color:
-      - 284.706
+      - 284.941
       - 100
       rgb_color:
-      - 190
+      - 191
       - 0
       - 255
       xy_color:
-      - 0.299
-      - 0.115
-      icon: mdi:led-strip-variant
-      friendly_name: Office Bookshelf Lights
-      supported_features: 17
+      - 0.301
+      - 0.116
       state: 'on'
-    light.lava_lamp:
-      icon: mdi:lava-lamp
-      friendly_name: Lava Lamp
+    light.shelf_lights:
+      effect_list:
+      - blink
+      - breathe
+      - okay
+      - channel_change
+      - finish_effect
+      - stop_effect
+      supported_color_modes:
+      - brightness
+      level_config:
+        on_level: previous
+      linkquality: 129
+      power_on_behavior: previous
+      update:
+        state: idle
+      update_available: false
+      friendly_name: Shelf Lights
+      supported_features: 45
+      color_mode: brightness
+      brightness: 255
       state: 'on'
   icon: mdi:text-to-speech
+  metadata:
+    light.iris:
+      entity_only: false
+    light.go:
+      entity_only: false
+    light.shelf_lights:
+      entity_only: false
+    light.lava_lamp:
+      entity_only: false
+    light.bookcase_light:
+      entity_only: false
 - id: '1637246066705'
   name: Work Background Lighting
   entities:
@@ -145,18 +197,12 @@
 - id: '1637883108135'
   name: Living Room Dimmed
   entities:
-    light.living_room_main_lights:
+    light.living_room_overhead:
       min_mireds: 153
       max_mireds: 454
       effect_list:
       - None
-      - blink
-      - breathe
       - candle
-      - channel_change
-      - finish_effect
-      - okay
-      - stop_effect
       supported_color_modes:
       - color_temp
       color_mode: color_temp
@@ -174,63 +220,14 @@
       - 0.385
       effect: None
       entity_id:
-      - light.living_room_overhead
-      - light.uplighter
+      - light.living_room_kitchen
+      - light.living_room_patio
       icon: mdi:lightbulb-group
-      friendly_name: Living Room Main Lights
+      friendly_name: Living Room Overhead Lights
       supported_features: 44
       state: 'on'
-    light.uplighter:
-      min_mireds: 250
-      max_mireds: 454
-      effect_list:
-      - blink
-      - breathe
-      - okay
-      - channel_change
-      - finish_effect
-      - stop_effect
-      supported_color_modes:
-      - color_temp
-      color_mode: color_temp
-      brightness: 23
-      color_temp: 352
-      hs_color:
-      - 28.109
-      - 61.425
-      rgb_color:
-      - 255
-      - 171
-      - 98
-      xy_color:
-      - 0.512
-      - 0.385
-      linkquality: 42
-      power_on_behavior:
-      update:
-        state: idle
-      update_available: false
-      icon: mdi:floor-lamp-torchiere
-      friendly_name: Uplighter
-      supported_features: 47
-      state: 'on'
-    select.uplighter_power_on_behavior:
-      options:
-      - 'off'
-      - previous
-      - 'on'
-      brightness: 23
-      color_mode: color_temp
-      color_temp: 352
-      linkquality: 42
-      power_on_behavior:
-      update:
-        state: idle
-      update_available: false
-      icon: mdi:power-settings
-      friendly_name: Uplighter power on behavior
-      state: unknown
   icon: mdi:filmstrip
+  metadata: {}
 - id: '1639511654238'
   name: 'Living Room: Ready to Open the Door'
   entities:
@@ -345,3 +342,111 @@
       supported_features: 17
       state: 'on'
   icon: mdi:alarm
+- id: '1656101809947'
+  name: Living Room Evening
+  entities:
+    light.living_room_overhead:
+      min_mireds: 153
+      max_mireds: 454
+      effect_list:
+      - None
+      - candle
+      supported_color_modes:
+      - color_temp
+      entity_id:
+      - light.living_room_kitchen
+      - light.living_room_patio
+      icon: mdi:lightbulb-group
+      friendly_name: Living Room Overhead Lights
+      supported_features: 44
+      color_mode: color_temp
+      brightness: 255
+      color_temp: 454
+      hs_color:
+      - 29.79
+      - 84.553
+      rgb_color:
+      - 255
+      - 146
+      - 39
+      xy_color:
+      - 0.579
+      - 0.388
+      effect: None
+      state: 'on'
+    light.uplighter:
+      min_mireds: 250
+      max_mireds: 454
+      effect_list:
+      - blink
+      - breathe
+      - okay
+      - channel_change
+      - finish_effect
+      - stop_effect
+      supported_color_modes:
+      - color_temp
+      linkquality: 105
+      power_on_behavior:
+      update:
+        state: idle
+      update_available: false
+      icon: mdi:floor-lamp-torchiere
+      friendly_name: Uplighter
+      supported_features: 47
+      color_mode: color_temp
+      brightness: 255
+      color_temp: 454
+      hs_color:
+      - 29.79
+      - 84.553
+      rgb_color:
+      - 255
+      - 146
+      - 39
+      xy_color:
+      - 0.579
+      - 0.388
+      state: 'on'
+    light.reading_light:
+      min_mireds: 250
+      max_mireds: 454
+      effect_list:
+      - blink
+      - breathe
+      - okay
+      - channel_change
+      - finish_effect
+      - stop_effect
+      supported_color_modes:
+      - color_temp
+      color_temp_startup: 454
+      linkquality: 117
+      power_on_behavior:
+      update:
+        state: idle
+      update_available: false
+      icon: hue:wall-spot
+      friendly_name: Reading Light
+      supported_features: 47
+      color_mode: color_temp
+      brightness: 255
+      color_temp: 454
+      hs_color:
+      - 29.79
+      - 84.553
+      rgb_color:
+      - 255
+      - 146
+      - 39
+      xy_color:
+      - 0.579
+      - 0.388
+      state: 'on'
+  metadata:
+    light.reading_light:
+      entity_only: true
+    light.uplighter:
+      entity_only: true
+    light.living_room_overhead:
+      entity_only: true

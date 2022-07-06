@@ -23,3 +23,5 @@
     - service: mobile_app_kitchen_ipad
     - service: mobile_app_rosemarys_iphone_13_pro
     - service: log_file
+    - service: android_tv
+    - service: telegram

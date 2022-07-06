@@ -5,3 +5,19 @@
   remove_holidays:
     - "[Scotland]"
     - "[Northern Ireland]"
+- platform: threshold
+  name: "Light Level: Lounge"
+  entity_id: sensor.living_room_light_sensor_illuminance_lux
+  lower: 200
+- platform: threshold
+  name: "Light Level: Kitchen"
+  entity_id: sensor.kitchen_light_sensor_illuminance_lux
+  lower: 300
+- platform: threshold
+  name: "Light Level: Bedroom"
+  entity_id: sensor.bedroom_light_sensor_illuminance_lux
+  lower: 500
+- platform: threshold
+  name: "Light Level: Office"
+  entity_id: sensor.office_light_sensor_illuminance_lux
+  lower: 500

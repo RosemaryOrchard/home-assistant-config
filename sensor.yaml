@@ -27,15 +27,6 @@
     - min_elevation
     - max_elevation
 - platform: season
-- platform: version
-- platform: template
-  sensors:
-    washing_machine_status:
-      value_template: "{{ states('input_select.washing_machine_status') }}"
-      friendly_name: "Washing Machine Status"
-    dryer_status:
-      value_template: "{{ states('input_select.dryer_status') }}"
-      friendly_name: "Tumble Dryer Status"
 - platform: rest
   name: SwitchBot Bedroom Curtain
   resource: !secret switchbot_bedroom_status_url
@@ -81,7 +72,7 @@
     - moving
     - slidePosition
 - platform: rest
-  name: SwitchBot Lounge Curtain
+  name: SwitchBot Bedroom Light Curtain
   resource: !secret switchbot_lounge_status_url
   method: GET
   scan_interval: 600

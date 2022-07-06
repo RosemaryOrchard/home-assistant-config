@@ -24,6 +24,7 @@ generic_hygrostat: !include hygrostat.yaml
 group: !include groups.yaml
 homekit: !include homekit.yaml
 influxdb: !include influxdb.yaml
+logbook:
 logger: !include logger.yaml
 media_player: !include media_player.yaml
 notify: !include notify.yaml

@@ -5,3 +5,9 @@ people:
     - person.dad
     - person.mum
     - person.guest
+rechargeable_batteries:
+  name: Rechargeable Batteries
+  entities:
+    - sensor.lounge_left_curtain_battery
+    - sensor.lounge_right_curtain_battery
+    

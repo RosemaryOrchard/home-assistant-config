@@ -306,40 +306,37 @@
   description: ''
   trigger:
   - platform: state
-    entity_id: input_select.dishwasher_status
+    entity_id:
+    - input_select.dishwasher_status
     id: dishwasher
+    to: Clean
   - platform: state
-    entity_id: input_select.washing_machine_status
+    entity_id:
+    - input_select.washing_machine_status
     id: washing_machine
+    to: Clean
   - platform: state
-    entity_id: input_select.tumble_dryer_status
+    entity_id:
+    - input_select.tumble_dryer_status
     id: tumble_dryer
+    to: Needs Emptying
   condition: []
   action:
-  - condition: or
-    conditions:
-    - condition: and
-      conditions:
-      - condition: trigger
-        id: dishwasher
-      - condition: template
-        value_template: '{{ is_state(trigger.entity_id, "Clean") }}'
-    - condition: and
-      conditions:
-      - condition: trigger
-        id: washing_machine
-      - condition: template
-        value_template: '{{ is_state(trigger.entity_id, "Clean") }}'
-    - condition: and
-      conditions:
-      - condition: trigger
-        id: tumble_dryer
-      - condition: template
-        value_template: '{{ is_state(trigger.entity_id, "Needs Emptying") }}'
   - service: notify.standard
     data:
-      title: '{{ trigger.to_state.attributes.friendly_name }}'
-      message: '{{ states(trigger.entity_id) }}'
+      title: '{{ trigger.to_state.attributes.friendly_name | default("Something in
+        the Kitchen") }}'
+      message: '{{ states(trigger.entity_id) | default("Finished") }}'
+  - if:
+    - condition: state
+      entity_id: media_player.philips_tv
+      state: 'on'
+    then:
+    - service: notify.android_tv
+      data:
+        title: '{{ trigger.to_state.attributes.friendly_name | default("Something
+          in the Kitchen") }}'
+        message: '{{ states(trigger.entity_id) | default("Finished") }}'
   - service: grocy.add_generic
     data:
       entity_type: tasks
@@ -347,6 +344,34 @@
         name: Empty the {{ trigger.to_state.attributes.friendly_name | replace("Status",
           "") | trim  }}
         due_date: '{{ now().year }}-{{ now().month }}-{{ now().day }}'
+    enabled: false
+  - choose:
+    - conditions:
+      - condition: trigger
+        id: dishwasher
+      sequence:
+      - service: rest_command.grocy_manual_chore_due
+        data:
+          choreId: 38
+    - conditions:
+      - condition: trigger
+        id: washing_machine
+      sequence:
+      - service: rest_command.grocy_manual_chore_due
+        data:
+          choreId: 35
+          payload:
+            rescheduled_date: '{{ now() + timedelta( minutes = 15 ) }}'
+    - conditions:
+      - condition: trigger
+        id: tumble_dryer
+      sequence:
+      - service: rest_command.grocy_manual_chore_due
+        data:
+          choreId: 37
+          payload:
+            rescheduled_date: '{{ now() + timedelta( minutes = 15 ) }}'
+    default: []
   mode: single
 - id: '1636844645498'
   alias: Energy Meter Tariff Switch
@@ -369,16 +394,11 @@
   alias: 'Lava Lamp 1: Set Turn off Time'
   description: ''
   trigger:
-  - platform: device
-    type: turned_on
-    device_id: fcb7700b720533a389207b0208d49b5e
-    entity_id: light.lava_lamp
-    domain: switch
-    for:
-      hours: 0
-      minutes: 0
-      seconds: 0
-      milliseconds: 0
+  - platform: state
+    entity_id:
+    - light.lava_lamp
+    not_from: 'on'
+    to: 'on'
   condition: []
   action:
   - service: input_datetime.set_datetime
@@ -395,21 +415,20 @@
     at: input_datetime.lava_lamp_off
   - platform: homeassistant
     event: start
-  condition:
-  - condition: and
-    conditions:
-    - condition: device
-      type: is_on
-      device_id: fcb7700b720533a389207b0208d49b5e
-      entity_id: light.lava_lamp
-      domain: switch
-    - condition: time
-      after: input_datetime.lava_lamp_off
+  - platform: state
+    entity_id:
+    - light.lava_lamp
+    to: 'On'
+    for:
+      hours: 7
+      minutes: 30
+      seconds: 0
+  condition: []
   action:
-  - type: turn_off
-    device_id: fcb7700b720533a389207b0208d49b5e
-    entity_id: light.lava_lamp
-    domain: switch
+  - service: light.turn_off
+    data: {}
+    target:
+      entity_id: light.lava_lamp
   mode: single
 - id: '1637010873397'
   alias: 'Dishwasher 2: Drying'
@@ -681,7 +700,7 @@
     target:
       entity_id: input_datetime.buttercup_cleaned
     data:
-      date: '{{ now() }}'
+      date: '{{ now().strftime("%Y-%m-%d") }}'
   mode: single
 - id: '1637514198181'
   alias: Home Assistant Start Checks
@@ -842,13 +861,17 @@
   description: ''
   trigger:
   - platform: state
-    entity_id: binary_sensor.television_active
+    entity_id:
+    - binary_sensor.television_active
     to: 'on'
     id: 'On'
+    from: 'off'
   - platform: state
-    entity_id: binary_sensor.television_active
+    entity_id:
+    - binary_sensor.television_active
     to: 'off'
     id: 'Off'
+    from: 'on'
   condition: []
   action:
   - choose:
@@ -856,55 +879,56 @@
       - condition: trigger
         id: 'On'
       sequence:
-      - choose:
-        - conditions:
-          - condition: device
-            type: is_on
-            device_id: f5e4fc1a853c8e39594f29487ecf0fc1
+      - if:
+        - condition: state
+          entity_id: light.hallway_overhead
+          state: 'on'
+        then:
+        - service: light.turn_off
+          target:
             entity_id: light.hallway_overhead
-            domain: light
-          sequence:
-          - service: light.turn_off
-            target:
-              device_id: f5e4fc1a853c8e39594f29487ecf0fc1
-            data: {}
-        default: []
-      - choose:
-        - conditions:
-          - condition: or
-            conditions:
-            - condition: state
-              entity_id: binary_sensor.dark_lounge
-              state: 'on'
-            - condition: state
-              entity_id: light.living_room_main_lights
-              state: 'on'
-          sequence:
-          - service: scene.turn_on
-            target:
-              entity_id: scene.living_room_dimmed
-            data:
-              transition: 10
-        default: []
-    - conditions:
-      - condition: trigger
-        id: 'Off'
-      - condition: state
-        entity_id: binary_sensor.dark_lounge
-        state: 'on'
-      sequence:
-      - choose:
-        - conditions:
+          data: {}
+      - if:
+        - condition: or
+          conditions:
           - condition: state
             entity_id: binary_sensor.dark_lounge
             state: 'on'
-          sequence:
-          - service: scene.turn_on
+          - condition: state
+            entity_id: light.living_room_main_lights
+            state: 'on'
+          enabled: true
+        then:
+        - if:
+          - condition: state
+            entity_id: light.living_room_main_lights
+            state: 'on'
+          then:
+          - service: scene.create
             data:
-              transition: 20
-            target:
-              entity_id: scene.living_room_bright_2
-        default: []
+              scene_id: living_room_lights
+              snapshot_entities:
+              - light.living_room_overhead
+              - light.light_panels
+        - service: scene.turn_on
+          target:
+            entity_id: scene.living_room_dimmed
+          data:
+            transition: 10
+    - conditions:
+      - condition: trigger
+        id: 'Off'
+      sequence:
+      - if:
+        - condition: state
+          entity_id: binary_sensor.dark_lounge
+          state: 'on'
+        then:
+        - service: scene.turn_on
+          data:
+            transition: 20
+          target:
+            entity_id: scene.living_room_lights
     default: []
   mode: single
 - id: '1637886815823'
@@ -940,8 +964,13 @@
   action:
   - choose:
     - conditions:
-      - condition: trigger
-        id: 'on'
+      - condition: or
+        conditions:
+        - condition: trigger
+          id: 'on'
+        - condition: state
+          entity_id: binary_sensor.presence_lounge
+          state: 'on'
       sequence:
       - choose:
         - conditions:
@@ -1304,7 +1333,7 @@
       message: '{{ states(''sensor.kitchen_light_sensor_illuminance_lux'') }}'
   mode: single
 - id: '1640175607133'
-  alias: Create Sensor Groups
+  alias: Create Groups
   description: ''
   trigger:
   - platform: time
@@ -1320,11 +1349,9 @@
   - service: group.set
     data:
       object_id: all_temperature_sensors
-      entities: '{{ states.sensor | selectattr(''entity_id'', ''search'', ''temperature'')
-        | rejectattr(''entity_id'', ''search'', ''window'') | map(attribute=''entity_id'')
-        | list }}
-
-        '
+      entities: "{{ states.sensor | selectattr(\"entity_id\", \"search\", \"temperature\")\n
+        \   | rejectattr(\"entity_id\", \"search\", \"window\") | map(attribute=\"entity_id\")\n
+        \   | list }}"
   mode: single
 - id: '1641302320853'
   alias: New MQTT Device Notification
@@ -1581,7 +1608,10 @@
     entity_id: lock.patio_door_right
     from: locked
     to: unlocked
-  condition: []
+  condition:
+  - condition: numeric_state
+    entity_id: sensor.ha_uptime_seconds
+    above: '30'
   action:
   - choose:
     - conditions:
@@ -1590,13 +1620,15 @@
       sequence:
       - service: script.1642870456606
         data: {}
-      - condition: state
-        entity_id: binary_sensor.dark_lounge
-        state: 'on'
-      - service: cover.close_cover
-        data: {}
-        target:
-          entity_id: cover.lounge_curtain
+      - if:
+        - condition: state
+          entity_id: binary_sensor.dark_lounge
+          state: 'on'
+        then:
+        - service: cover.close_cover
+          data: {}
+          target:
+            entity_id: cover.lounge_curtain
     - conditions:
       - condition: trigger
         id: unlock
@@ -1700,33 +1732,6 @@
     data: {}
     target:
       device_id: 2cf922a4500093c4273a8e3851bb0998
-  mode: single
-- id: '1647638373131'
-  alias: HomeKit Buttons
-  description: ''
-  trigger:
-  - platform: state
-    entity_id: input_button.homekit_going_out_scene
-    id: going_out
-  - platform: state
-    entity_id: input_button.homekit_getting_up_scene
-    id: getting_up
-  condition: []
-  action:
-  - choose:
-    - conditions:
-      - condition: trigger
-        id: going_out
-      sequence:
-      - service: script.open_living_room_blinds
-        data: {}
-    - conditions:
-      - condition: trigger
-        id: getting_up
-      sequence:
-      - service: script.getting_up
-        data: {}
-    default: []
   mode: single
 - id: '1647648055056'
   alias: Patio Door Button
@@ -1989,4 +1994,153 @@
     data: {}
     target:
       entity_id: light.3d_printer_lights
+  mode: single
+- id: '1656101321518'
+  alias: Update living room lights scene
+  description: ''
+  trigger:
+  - platform: sun
+    event: sunset
+    offset: -00:45:00
+  condition:
+  - condition: state
+    entity_id: binary_sensor.television_active
+    state: 'on'
+  action:
+  - service: scene.create
+    data:
+      scene_id: living_room_lights
+      entities: {}
+  mode: single
+- id: '1656545964922'
+  alias: Alarm Clock
+  description: ''
+  trigger:
+  - platform: time
+    at: input_datetime.alarm_time
+  - platform: template
+    value_template: '{{ is_state(''sensor.alarm_clock_timestamp'', now()) }}'
+  condition:
+  - condition: state
+    entity_id: binary_sensor.alarm_clock_status
+    state: 'on'
+  action:
+  - service: input_datetime.set_datetime
+    data:
+      datetime: '{{ now() }}'
+    target:
+      entity_id: input_datetime.alarm_clock_ran
+  - parallel:
+    - service: script.1651066903184
+      data: {}
+    - service: light.turn_on
+      data:
+        transition: 300
+        rgb_color:
+        - 255
+        - 38
+        - 0
+        brightness_pct: 25
+      target:
+        entity_id: light.wake_up
+  - service: light.turn_on
+    data:
+      transition: 300
+      rgb_color:
+      - 255
+      - 147
+      - 0
+      brightness_pct: 75
+    target:
+      entity_id: light.wake_up
+  - service: light.turn_on
+    data:
+      transition: 60
+      brightness_pct: 100
+      color_temp: 500
+    target:
+      entity_id: light.wake_up
+  - service: light.turn_on
+    data:
+      transition: 300
+      brightness_pct: 100
+      color_temp: 153
+    target:
+      entity_id: light.wake_up
+  - service: script.morning
+    data: {}
+  mode: single
+- id: '1656559517103'
+  alias: Turn on Christmas Boolean
+  description: ''
+  trigger:
+  - platform: time
+    at: 00:00:00
+  condition: []
+  action:
+  - choose:
+    - conditions:
+      - condition: state
+        entity_id: input_boolean.christmas
+        state: 'off'
+      - condition: or
+        conditions:
+        - condition: template
+          value_template: '{{ (now().month | int) == 12 }}'
+        - condition: template
+          value_template: '{{ (now().month | int) == 1 and (now().day | int) <= 6
+            }}'
+      sequence:
+      - service: input_boolean.turn_on
+        target:
+          entity_id: input_boolean.christmas
+        data: {}
+    - conditions:
+      - condition: state
+        entity_id: input_boolean.christmas
+        state: 'off'
+      sequence:
+      - service: input_boolean.turn_off
+        data: {}
+        target:
+          entity_id: input_boolean.christmas
+    default: []
+  mode: single
+- id: '1656698695020'
+  alias: iOS Today Lighting
+  description: ''
+  trigger:
+  - platform: calendar
+    event: start
+    offset: '-1:15:0'
+    entity_id: calendar.ios_today
+    id: Cooldown
+  - platform: calendar
+    event: start
+    offset: -0:15:0
+    entity_id: calendar.ios_today
+    id: Start
+  condition:
+  - condition: state
+    entity_id: person.rosemary_orchard
+    state: home
+  action:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id: Cooldown
+      sequence:
+      - service: light.turn_off
+        data: {}
+        target:
+          entity_id: light.lava_lamp
+    - conditions:
+      - condition: trigger
+        id: Start
+      sequence:
+      - service: scene.turn_on
+        data: {}
+        target:
+          entity_id: scene.podcasting_lights
+    default: []
   mode: single

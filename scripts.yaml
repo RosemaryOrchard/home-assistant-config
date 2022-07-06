@@ -139,6 +139,7 @@ time_to_sleep:
           entity_id:
           - switch.electric_blanket_left
           - switch.electric_blanket_right
+          - switch.electric_blanket
         data: {}
     default: []
   - service: light.turn_off
@@ -382,11 +383,10 @@ open_living_room_blinds:
   - service: cover.open_cover
     target:
       entity_id:
-      - cover.lounge_curtain
       - cover.vertical_open
     data: {}
   mode: single
-  icon: mdi:curtains
+  icon: mdi:door-sliding
 all_heating_to_15:
   alias: All Heating to 15
   sequence:
@@ -516,13 +516,16 @@ getting_up:
         entity_id: input_select.electric_blanket_time_off_options
         state: None
       sequence:
-      - service: input_select.select_next
+      - service: switch.turn_off
         data: {}
         target:
-          entity_id: input_select.electric_blanket_time_off_options
+          entity_id:
+          - switch.electric_blanket
+          - switch.electric_blanket_left
+          - switch.electric_blanket_right
     default: []
   mode: single
-  icon: mdi:sleep
+  icon: mdi:chat-sleep
 leaving_home:
   alias: Leaving Home
   sequence:
@@ -551,6 +554,10 @@ showering:
   sequence:
   - service: script.1642870456606
     data: {}
+  - service: cover.close_cover
+    data: {}
+    target:
+      entity_id: cover.vertical_rotate
   - service: cover.close_cover
     data: {}
     target:
@@ -603,3 +610,18 @@ showering:
           milliseconds: 0
   mode: single
   alias: Slowly open bedroom blind
+patio_door_unlock_as_garage:
+  alias: Patio Door Unlock as Garage
+  sequence:
+  - delay:
+      hours: 0
+      minutes: 2
+      seconds: 0
+      milliseconds: 0
+  - service: lock.open
+    data: {}
+    target:
+      entity_id:
+      - lock.patio_door_right
+      - lock.patio_door_left
+  mode: single

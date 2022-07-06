@@ -23,3 +23,45 @@ pushcut_automation:
   content_type: "application/json; charset=utf-8"
 alarm_clock_end_shortcut:
   url: "https://api.pushcut.io/6i1205itekV-f_tA36bgZ/execute?shortcut=Morning%20Music"
+grocy_manual_chore_due:
+  url: "http://192.168.4.209:9111/api/objects/chores/{{ choreId }}"
+  method: put
+  content_type: "application/json"
+  headers:
+    Authorization: !secret grocy_token
+  payload: '{"rescheduled_date": "{{ states(''sensor.grocy_in_15_minutes'')}}"}'
+grocy_empty_tumble_dryer_due:
+  url: "http://192.168.4.209:9111/api/objects/chores/37"
+  method: put
+  content_type: "application/json"
+  headers:
+    Authorization: !secret grocy_token
+  payload: '{"rescheduled_date": "{{ now() + timedelta( minutes = 15 ) }}"}'
+grocy_empty_washing_machine_due:
+  url: "http://192.168.4.209:9111/api/objects/chores/35"
+  method: put
+  content_type: "application/json"
+  headers:
+    Authorization: !secret grocy_token
+  payload: '{"rescheduled_date": "{{ now() + timedelta( minutes = 15 ) }}"}'
+grocy_empty_dishwasher_due:
+  url: "http://192.168.4.209:9111/api/objects/chores/38"
+  method: put
+  content_type: "application/json"
+  headers:
+    Authorization: !secret grocy_token
+  payload: '{"rescheduled_date": "{{ now() + timedelta( minutes = 15 ) }}"}'
+grocy_empty_robot_vacuum_due:
+  url: "http://192.168.4.209:9111/api/objects/chores/27"
+  method: put
+  content_type: "application/json"
+  headers:
+    Authorization: !secret grocy_token
+  payload: '{"rescheduled_date": "{{ now() + timedelta( minutes = 15 ) }}"}'
+grocy_replace_dishwasher_cassette_due:
+  url: "http://192.168.4.209:9111/api/objects/chores/6"
+  method: put
+  content_type: "application/json"
+  headers:
+    Authorization: !secret grocy_token
+  payload: '{"rescheduled_date": "{{ now() + timedelta( minutes = 15 ) }}"}'
