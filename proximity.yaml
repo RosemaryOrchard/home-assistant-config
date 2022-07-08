@@ -1,6 +1,9 @@
 home:
-  zone: 'home'
+  zone: "home"
   devices:
-    - person.rosemary_orchard
+    - device_tracker.rosemarys_iphone_13_pro
   tolerance: 50
   unit_of_measurement: mi
+  ignored_zones:
+    - zone.work
+    - zone.mum_dad

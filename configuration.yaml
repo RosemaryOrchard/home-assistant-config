@@ -1,12 +1,9 @@
 # Configure a default setup of Home Assistant (frontend, api, etc)
 default_config:
-
-# Text to speech
-tts:
-  - platform: google_translate
-
 homeassistant:
   customize: !include customize.yaml
+  allowlist_external_dirs:
+    - "/config/www/files"
 http:
   use_x_forwarded_for: true
   trusted_proxies:
@@ -17,7 +14,6 @@ calendar: !include caldav.yaml
 camera: !include camera.yaml
 climate: !include climate.yaml
 cover: !include cover.yaml
-eufy_vacuum: !include eufy_vacuum.yaml
 frontend:
   themes: !include_dir_merge_named themes
 generic_hygrostat: !include hygrostat.yaml
@@ -28,7 +24,11 @@ logbook:
 logger: !include logger.yaml
 media_player: !include media_player.yaml
 notify: !include notify.yaml
+plant: !include plant.yaml
 proximity: !include proximity.yaml
+pyscript:
+  allow_all_imports: true
+  hass_is_global: true
 recorder:
   db_url: !secret mysql_connect
 rest_command: !include rest_command.yaml
@@ -38,6 +38,9 @@ sensor: !include sensor.yaml
 switch: !include switch.yaml
 telegram_bot: !include telegram.yaml
 template: !include template.yaml
+tts:
+  - platform: picotts
+    language: "en-GB"
 utility_meter: !include utility_meter.yaml
 webhook_service:
 withings: !include withings.yaml

@@ -1,0 +1,40 @@
+# small_orchid:
+#   sensors:
+#     moisture: sensor.my_sensor_moisture
+#     battery: sensor.my_sensor_battery
+#     temperature: sensor.my_sensor_temperature
+#     conductivity: sensor.my_sensor_conductivity
+#     brightness: sensor.my_sensor_brightness
+#   min_moisture: 20
+large_orchid:
+  sensors:
+    moisture: sensor.plant_large_orchid_moisture
+    battery: sensor.plant_large_orchid_battery
+    temperature: sensor.plant_large_orchid_temperature
+    conductivity: sensor.plant_large_orchid_conductivity
+    brightness: sensor.plant_large_orchid_brightness
+  min_battery: 10
+  min_moisture: 15
+  max_moisture: 65
+  min_temperature: 15
+  max_temperature: 32
+  min_conductivity: 350
+  max_conductivity: 2000
+  min_brightness: 2000
+  max_brightness: 10000
+# succulent:
+#   sensors:
+#     moisture: sensor.my_sensor_moisture
+#     battery: sensor.my_sensor_battery
+#     temperature: sensor.my_sensor_temperature
+#     conductivity: sensor.my_sensor_conductivity
+#     brightness: sensor.my_sensor_brightness
+#   min_moisture: 20
+# peace_lily:
+#   sensors:
+#     moisture: sensor.my_sensor_moisture
+#     battery: sensor.my_sensor_battery
+#     temperature: sensor.my_sensor_temperature
+#     conductivity: sensor.my_sensor_conductivity
+#     brightness: sensor.my_sensor_brightness
+#   min_moisture: 20

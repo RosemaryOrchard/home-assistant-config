@@ -193,3 +193,10 @@
     - elevation
     - min_elevation
     - max_elevation
+- platform: uk_transport
+  app_id: !secret transport_api_app_id
+  app_key: !secret transport_api_app_key
+  queries:
+    - mode: train
+      origin: CPM
+      destination: BTS

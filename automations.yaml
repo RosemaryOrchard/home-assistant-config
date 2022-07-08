@@ -463,6 +463,14 @@
     at: input_datetime.dishwasher_finishes_drying
   - platform: homeassistant
     event: start
+  - platform: state
+    entity_id:
+    - input_select.dishwasher_status
+    to: Drying
+    for:
+      hours: 0
+      minutes: 10
+      seconds: 0
   condition:
   - condition: and
     conditions:
@@ -2030,6 +2038,16 @@
       datetime: '{{ now() }}'
     target:
       entity_id: input_datetime.alarm_clock_ran
+  - service: light.turn_on
+    data:
+      transition: 60
+      rgb_color:
+      - 255
+      - 38
+      - 0
+      brightness_pct: 5
+    target:
+      entity_id: light.wake_up
   - parallel:
     - service: script.1651066903184
       data: {}
@@ -2142,5 +2160,43 @@
         data: {}
         target:
           entity_id: scene.podcasting_lights
+    default: []
+  mode: single
+- id: '1657132299772'
+  alias: Reset Microwave Clock
+  description: ''
+  trigger:
+  - platform: time
+    at: 00:00:58
+    id: 'off'
+  - platform: time
+    at: 00:01:00
+    id: 'on'
+  condition:
+  - condition: state
+    entity_id: input_boolean.reset_microwave_clock
+    state: 'on'
+  action:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id: 'off'
+      sequence:
+      - service: switch.turn_off
+        data: {}
+        target:
+          entity_id: switch.microwave
+    - conditions:
+      - condition: trigger
+        id: 'on'
+      sequence:
+      - service: switch.turn_off
+        data: {}
+        target:
+          entity_id: switch.microwave
+      - service: input_boolean.turn_off
+        data: {}
+        target:
+          entity_id: input_boolean.reset_microwave_clock
     default: []
   mode: single

@@ -625,3 +625,12 @@ patio_door_unlock_as_garage:
       - lock.patio_door_right
       - lock.patio_door_left
   mode: single
+wake_up_lights:
+  alias: Wake Up Lights
+  sequence:
+  - type: turn_off
+    device_id: 0ac856cce9b713b3905702f0eb81442e
+    entity_id: light.3d_printer_lights
+    domain: light
+  mode: single
+  icon: mdi:weather-sunset-up
