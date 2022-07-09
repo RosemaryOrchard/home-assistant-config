@@ -185,6 +185,11 @@
           mdi:sleep-off
         {% endif %}
 - sensor:
+    - name: Sleep or Wake
+      state: >
+        {% set get_up_time = state_attr('script.getting_up', 'last_triggered') %}
+        {% set sleep_time = state_attr('script.time_to_sleep', 'last_triggered') %}
+        {{ (get_up_time > sleep_time) | iif('script.time_to_sleep', 'script.getting_up') }}
     - name: "Average Living Room Temperature"
       unique_id: average_lounge_temperature
       unit_of_measurement: "°C"
