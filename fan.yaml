@@ -1,0 +1,40 @@
+- platform: template
+  fans:
+    kitchen_extractor:
+      friendly_name: "Kitchen Extractor"
+      unique_id: kitchen_extractor_timeguard
+      availability_template: "{{ not is_state('select.timeguard_time_switch_e7b0d48a_work_mode', 'unavailable') }}"
+      value_template: "{{ is_state('select.timeguard_time_switch_e7b0d48a_work_mode', 'Always on') | iif(True, False) }}"
+      turn_on:
+        service: select.select_option
+        data:
+          option: Always on
+        target:
+          entity_id: select.timeguard_time_switch_e7b0d48a_work_mode
+      turn_off:
+        service: select.select_option
+        data:
+          option: Always off
+        target:
+          entity_id: select.timeguard_time_switch_e7b0d48a_work_mode
+    dehumidifier:
+      friendly_name: Hallway Dehumidifier
+      unique_id: hallway_dehumififier
+      value_template: "{{ states('input_boolean.dehumidifier_alias') }}"
+      preset_mode_template: "{{ states('input_text.dehumidifier_mode') }}"
+      turn_on:
+        service: script.hallway_dehumidifier_preset_modes
+        data:
+          preset_mode: "On"
+      turn_off:
+        service: script.hallway_dehumidifier_preset_modes
+        data:
+          preset_mode: "Off"
+      preset_modes:
+        - "Low"
+        - "Normal"
+        - "Laundry"
+      set_preset_mode:
+        service: script.hallway_dehumidifier_preset_modes
+        data:
+          preset_mode: "{{ preset_mode }}"

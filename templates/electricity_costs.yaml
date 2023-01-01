@@ -1,0 +1,34 @@
+- sensor:
+    - name: "Electric: Cost (Today)"
+      unique_id: smart_meter_electricity_cost_today
+      device_class: monetary
+      unit_of_measurement: "GBP"
+      state_class: "total"
+      icon: mdi:cash
+      state: >
+        {% set units_today = states('sensor.smart_meter_electricity_import_today') | float(0) %}
+        {% set unit_rate = states('sensor.smart_meter_electricity_import_unit_rate') | float(0) %}
+        {% set standing_charge = states('sensor.smart_meter_electricity_import_standing_charge') | float(0) %}
+        {{ ((units_today * unit_rate) + standing_charge) | round(2) }}
+      attributes:
+        Source: sensor.smart_meter_electricity_import_today
+    - name: Accounted for Costs
+      unique_id: accounted_for_electricity
+      device_class: monetary
+      unit_of_measurement: "GBP"
+      state_class: "total"
+      icon: mdi:cash
+      state: >
+        {% set energy_sensors = states.sensor | selectattr('entity_id', 'search', '_cost_today') | rejectattr('entity_id', 'eq', 'sensor.smart_meter_electricity_cost_today') | list %}
+        {{ energy_sensors | map(attribute='state') | map('float') | sum | round(2) }}
+    - name: Unaccounted for Costs
+      unique_id: unaccounted_for_electricity
+      device_class: monetary
+      unit_of_measurement: "GBP"
+      state_class: "total"
+      icon: mdi:cash
+      state: >
+        {% set cost_today = states('sensor.smart_meter_electricity_cost_today') | float(0) %}
+        {% set standing_charge = states('sensor.smart_meter_electricity_import_standing_charge') | float(0) %}
+        {% set accounted = states('sensor.accounted_for_costs') | float(0) %}
+        {{ cost_today - (standing_charge + accounted) }}

@@ -1,0 +1,17 @@
+- button:
+    - name: "Washing Machine Power"
+      unique_id: washing_machine_power
+      icon: mdi:washing-machine
+      press:
+        service: rest_command.switchbot_device_command
+        data:
+          deviceId: !secret switchbot_washing_machine_power_deviceId
+          command: "turnOn"
+    - name: "Washing Machine Start"
+      unique_id: washing_machine_start
+      icon: mdi:washing-machine
+      press:
+        service: rest_command.switchbot_device_command
+        data:
+          deviceId: !secret switchbot_washing_machine_start_deviceId
+          command: "turnOn"

@@ -1,0 +1,514 @@
+addons:
+- advanced: false
+  available: true
+  build: true
+  description: connect eWeLink with home-assistant
+  detached: false
+  homeassistant: null
+  icon: true
+  logo: false
+  name: eWeLink Smart Home
+  repository: f4f71350
+  slug: f4f71350_ewelink_smart_home_slug
+  stage: stable
+  state: started
+  update_available: false
+  url: https://www.facebook.com/ewelink.support
+  version: 1.3.3
+  version_latest: 1.3.3
+- advanced: false
+  available: true
+  build: false
+  description: Fully featured Visual Studio Code (VSCode) experience integrated in
+    the Home Assistant frontend.
+  detached: false
+  homeassistant: null
+  icon: true
+  logo: true
+  name: Studio Code Server
+  repository: a0d7b954
+  slug: a0d7b954_vscode
+  stage: stable
+  state: started
+  update_available: false
+  url: https://github.com/hassio-addons/addon-vscode
+  version: 5.4.1
+  version_latest: 5.4.1
+- advanced: false
+  available: true
+  build: false
+  description: An Open Source MQTT broker
+  detached: false
+  homeassistant: null
+  icon: true
+  logo: true
+  name: Mosquitto broker
+  repository: core
+  slug: core_mosquitto
+  stage: stable
+  state: started
+  update_available: false
+  url: https://github.com/home-assistant/hassio-addons/tree/master/mosquitto
+  version: 6.1.3
+  version_latest: 6.1.3
+- advanced: false
+  available: true
+  build: false
+  description: Scalable datastore for metrics, events, and real-time analytics
+  detached: false
+  homeassistant: 0.92.0b2
+  icon: true
+  logo: true
+  name: InfluxDB
+  repository: a0d7b954
+  slug: a0d7b954_influxdb
+  stage: stable
+  state: started
+  update_available: false
+  url: https://github.com/hassio-addons/addon-influxdb
+  version: 4.5.0
+  version_latest: 4.5.0
+- advanced: false
+  available: true
+  build: false
+  description: The open platform for beautiful analytics and monitoring
+  detached: false
+  homeassistant: null
+  icon: true
+  logo: true
+  name: Grafana
+  repository: a0d7b954
+  slug: a0d7b954_grafana
+  stage: stable
+  state: started
+  update_available: false
+  url: https://github.com/hassio-addons/addon-grafana
+  version: 8.1.0
+  version_latest: 8.1.0
+- advanced: false
+  available: true
+  build: false
+  description: Use your ZigBee devices without the vendor's bridge or gateway
+  detached: false
+  homeassistant: null
+  icon: true
+  logo: true
+  name: Zigbee2MQTT
+  repository: 486e6e9b
+  slug: 486e6e9b_zigbee2mqtt
+  stage: stable
+  state: started
+  update_available: false
+  url: https://github.com/zigbee2mqtt/hassio-zigbee2mqtt/tree/master/zigbee2mqtt
+  version: 1.28.4-1
+  version_latest: 1.28.4-1
+- advanced: false
+  available: true
+  build: false
+  description: eufy_security_addon add-on eufy security websocket
+  detached: false
+  homeassistant: null
+  icon: true
+  logo: true
+  name: Eufy Security Add-on
+  repository: 3a26b21d
+  slug: 3a26b21d_eufy_security_addon
+  stage: stable
+  state: started
+  update_available: false
+  url: https://github.com/fuatakgun/eufy_security_addon
+  version: 1.1.0
+  version_latest: 1.1.0
+- advanced: false
+  available: true
+  build: false
+  description: Create RTSP server to broadcast streams, thanks to @aler9 - https://github.com/aler9/rtsp-simple-server
+  detached: false
+  homeassistant: null
+  icon: false
+  logo: false
+  name: RTSP Simple Server Add-on
+  repository: 75a80a57
+  slug: 75a80a57_rtsp_simple_server
+  stage: stable
+  state: started
+  update_available: false
+  url: null
+  version: v0.17.6
+  version_latest: v0.17.6
+- advanced: false
+  available: true
+  build: false
+  description: A SQL database server
+  detached: false
+  homeassistant: null
+  icon: true
+  logo: true
+  name: MariaDB
+  repository: core
+  slug: core_mariadb
+  stage: stable
+  state: started
+  update_available: false
+  url: https://github.com/home-assistant/hassio-addons/tree/master/mariadb
+  version: 2.5.1
+  version_latest: 2.5.1
+- advanced: true
+  available: true
+  build: false
+  description: SSH & Web Terminal access to your Home Assistant instance
+  detached: false
+  homeassistant: 0.92.0b2
+  icon: true
+  logo: true
+  name: SSH & Web Terminal
+  repository: a0d7b954
+  slug: a0d7b954_ssh
+  stage: stable
+  state: started
+  update_available: false
+  url: https://github.com/hassio-addons/addon-ssh
+  version: 12.1.3
+  version_latest: 12.1.3
+- advanced: false
+  available: true
+  build: false
+  description: Browser-based log utility for Home Assistant
+  detached: false
+  homeassistant: 0.92.0b2
+  icon: true
+  logo: true
+  name: Log Viewer
+  repository: a0d7b954
+  slug: a0d7b954_logviewer
+  stage: stable
+  state: started
+  update_available: false
+  url: https://github.com/hassio-addons/addon-log-viewer
+  version: 0.14.0
+  version_latest: 0.14.0
+- advanced: false
+  available: true
+  build: false
+  description: Fast, modern, secure VPN tunnel
+  detached: false
+  homeassistant: null
+  icon: true
+  logo: true
+  name: WireGuard
+  repository: a0d7b954
+  slug: a0d7b954_wireguard
+  stage: stable
+  state: unknown
+  update_available: false
+  url: https://github.com/hassio-addons/addon-wireguard
+  version: 0.7.1
+  version_latest: 0.7.1
+- advanced: false
+  available: true
+  build: false
+  description: Export all of your Home Assistant configuration to a git repository
+    of your choice.
+  detached: false
+  homeassistant: null
+  icon: true
+  logo: true
+  name: Home Assistant Git Exporter
+  repository: 243ffc37
+  slug: 243ffc37_git-exporter
+  stage: stable
+  state: unknown
+  update_available: false
+  url: https://github.com/Poeschl/Hassio-Addons/tree/main/git-exporter
+  version: 1.14.0
+  version_latest: 1.14.0
+- advanced: true
+  available: true
+  build: false
+  description: Simple git pull to update the local configuration
+  detached: false
+  homeassistant: null
+  icon: true
+  logo: true
+  name: Git pull
+  repository: core
+  slug: core_git_pull
+  stage: stable
+  state: unknown
+  update_available: false
+  url: https://github.com/home-assistant/hassio-addons/tree/master/git_pull
+  version: 7.13.1
+  version_latest: 7.13.1
+- advanced: false
+  available: true
+  build: false
+  description: Deltadore Tydom to MQTT Bridge
+  detached: false
+  homeassistant: null
+  icon: true
+  logo: true
+  name: tydom2mqtt
+  repository: 9afc8f77
+  slug: 9afc8f77_tydom2mqtt
+  stage: stable
+  state: started
+  update_available: false
+  url: https://github.com/fmartinou/tydom2mqtt.git
+  version: 2.6.6
+  version_latest: 2.6.6
+- advanced: false
+  available: true
+  build: false
+  description: Expose Home Assistant folders with SMB/CIFS
+  detached: false
+  homeassistant: null
+  icon: true
+  logo: true
+  name: Samba share
+  repository: core
+  slug: core_samba
+  stage: stable
+  state: started
+  update_available: false
+  url: https://github.com/home-assistant/hassio-addons/tree/master/samba
+  version: 10.0.0
+  version_latest: 10.0.0
+- advanced: false
+  available: true
+  build: false
+  description: Check your Home Assistant configuration against other versions
+  detached: true
+  homeassistant: null
+  icon: false
+  logo: false
+  name: Check Home Assistant configuration
+  repository: core
+  slug: core_check_config
+  stage: deprecated
+  state: unknown
+  update_available: false
+  url: https://github.com/home-assistant/hassio-addons/tree/master/check_config
+  version: 3.11.0
+  version_latest: 3.11.0
+- advanced: false
+  available: true
+  build: false
+  description: Open source web and proxy server with automatic HTTPS
+  detached: false
+  homeassistant: null
+  icon: true
+  logo: true
+  name: Caddy 2
+  repository: c80c7555
+  slug: c80c7555_caddy-2
+  stage: stable
+  state: started
+  update_available: false
+  url: https://github.com/einschmidt/addon-caddy-2
+  version: 1.2.6
+  version_latest: 1.2.6
+- advanced: false
+  available: true
+  build: false
+  description: Create backups and store them on a Samba share
+  detached: false
+  homeassistant: null
+  icon: true
+  logo: false
+  name: Samba Backup
+  repository: 15d21743
+  slug: 15d21743_samba_backup
+  stage: stable
+  state: error
+  update_available: false
+  url: https://github.com/thomasmauerer/hassio-addons/tree/master/samba-backup
+  version: 5.2.0
+  version_latest: 5.2.0
+- advanced: false
+  available: true
+  build: false
+  description: Fully configurable Z-Wave JS gateway and control panel
+  detached: false
+  homeassistant: null
+  icon: true
+  logo: true
+  name: Z-Wave JS UI
+  repository: a0d7b954
+  slug: a0d7b954_zwavejs2mqtt
+  stage: stable
+  state: started
+  update_available: false
+  url: https://github.com/hassio-addons/addon-zwave-js-ui
+  version: 1.3.0
+  version_latest: 1.3.0
+- advanced: false
+  available: true
+  build: false
+  description: A free and open source interactive HTTPS proxy for intercepting and
+    inspecting network traffic
+  detached: false
+  homeassistant: null
+  icon: true
+  logo: true
+  name: mitmproxy
+  repository: 243ffc37
+  slug: 243ffc37_mitmproxy
+  stage: stable
+  state: unknown
+  update_available: false
+  url: https://github.com/Poeschl/Hassio-Addons/tree/master/mitmproxy
+  version: 1.2.0
+  version_latest: 1.2.0
+- advanced: true
+  available: true
+  build: false
+  description: A home automation platform powered by node.js
+  detached: false
+  homeassistant: null
+  icon: true
+  logo: true
+  name: Scrypted
+  repository: b54ae9a0
+  slug: b54ae9a0_scrypted
+  stage: experimental
+  state: started
+  update_available: false
+  url: https://github.com/koush/scrypted
+  version: v0.4.1
+  version_latest: v0.4.1
+- advanced: false
+  available: true
+  build: false
+  description: ESPHome add-on for intelligently managing all your ESP8266/ESP32 devices
+  detached: false
+  homeassistant: null
+  icon: true
+  logo: true
+  name: ESPHome
+  repository: 5c53de3b
+  slug: 5c53de3b_esphome
+  stage: stable
+  state: started
+  update_available: false
+  url: https://esphome.io/
+  version: 2022.11.4
+  version_latest: 2022.11.4
+- advanced: false
+  available: true
+  build: false
+  description: A local NTP (Network Time Protocol) server for cameras etc.
+  detached: false
+  homeassistant: null
+  icon: true
+  logo: true
+  name: chrony
+  repository: a0d7b954
+  slug: a0d7b954_chrony
+  stage: stable
+  state: started
+  update_available: false
+  url: https://github.com/hassio-addons/addon-chrony
+  version: 2.4.0
+  version_latest: 2.4.0
+- advanced: false
+  available: true
+  build: false
+  description: Manage battery backup (UPS) devices
+  detached: false
+  homeassistant: null
+  icon: true
+  logo: true
+  name: Network UPS Tools
+  repository: a0d7b954
+  slug: a0d7b954_nut
+  stage: stable
+  state: started
+  update_available: false
+  url: https://github.com/hassio-addons/addon-nut
+  version: 0.11.0
+  version_latest: 0.11.0
+- advanced: false
+  available: true
+  build: true
+  description: Simple timer on weekly base
+  detached: false
+  homeassistant: 0.91.1
+  icon: true
+  logo: false
+  name: Simple Scheduler
+  repository: 00185a40
+  slug: 00185a40_simplescheduler
+  stage: stable
+  state: started
+  update_available: false
+  url: https://github.com/arthurdent75/SimpleScheduler
+  version: 2.0.15
+  version_latest: 2.0.15
+- advanced: false
+  available: true
+  build: true
+  description: 'WireGuard Easy: WireGuard + UI in one'
+  detached: false
+  homeassistant: null
+  icon: true
+  logo: false
+  name: wgeasy
+  repository: 2effc9b9
+  slug: 2effc9b9_wgeasy
+  stage: stable
+  state: error
+  update_available: false
+  url: https://github.com/jdeath/homeassistant-addons/tree/main/wgeasy
+  version: "7"
+  version_latest: "7"
+- advanced: false
+  available: true
+  build: false
+  description: Flow-based programming for the Internet of Things
+  detached: false
+  homeassistant: 2021.3.0
+  icon: true
+  logo: true
+  name: Node-RED
+  repository: a0d7b954
+  slug: a0d7b954_nodered
+  stage: stable
+  state: started
+  update_available: false
+  url: https://github.com/hassio-addons/addon-node-red
+  version: 13.5.3
+  version_latest: 13.5.3
+- advanced: false
+  available: true
+  build: false
+  description: Development build of the Zigbee2MQTT add-on
+  detached: false
+  homeassistant: null
+  icon: true
+  logo: true
+  name: Zigbee2MQTT Edge
+  repository: 486e6e9b
+  slug: 486e6e9b_zigbee2mqtt_edge
+  stage: stable
+  state: unknown
+  update_available: false
+  url: https://github.com/zigbee2mqtt/hassio-zigbee2mqtt/tree/master/zigbee2mqtt-edge
+  version: edge
+  version_latest: edge
+- advanced: false
+  available: true
+  build: false
+  description: Simple browser-based file editor for Home Assistant
+  detached: false
+  homeassistant: 0.91.1
+  icon: true
+  logo: true
+  name: File editor
+  repository: core
+  slug: core_configurator
+  stage: stable
+  state: started
+  update_available: false
+  url: https://github.com/home-assistant/hassio-addons/tree/master/configurator
+  version: 5.4.2
+  version_latest: 5.4.2

@@ -1,0 +1,6 @@
+urls:
+  - http://www.metoffice.gov.uk/public/data/PWSCache/WarningsRSS/Region/sw
+  - https://rc.home-assistant.io/atom.xml
+  - https://www.home-assistant.io/atom.xml
+  - https://hasspodcast.io/feed/podcast
+  - http://feeds.bbci.co.uk/news/rss.xml?edition=uk

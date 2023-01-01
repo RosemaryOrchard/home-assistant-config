@@ -1,0 +1,379 @@
+- sensor:
+    - name: "Microwave: Cost (Today)"
+      unique_id: microwave_electricity_cost_today
+      device_class: monetary
+      unit_of_measurement: "GBP"
+      state_class: "total"
+      icon: mdi:microwave
+      state: >
+        {% set units_today = states('sensor.microwave_monitor_energy_today') | float(0) %}
+        {% set unit_rate = states('sensor.smart_meter_electricity_import_unit_rate') | float(0) %}
+        {{ (units_today * unit_rate) | round(2) }}
+      attributes:
+        power_usage: sensor.microwave_monitor_energy_power
+        Source: sensor.microwave_monitor_energy_today
+        daily_total: sensor.microwave_monitor_energy_today
+    - name: "Fridge: Cost (Today)"
+      unique_id: fridge_electricity_cost_today
+      device_class: monetary
+      unit_of_measurement: "GBP"
+      state_class: "total"
+      icon: mdi:fridge-top
+      state: >
+        {% set units_today = states('sensor.fridge_monitor_energy_today') | float(0) %}
+        {% set unit_rate = states('sensor.smart_meter_electricity_import_unit_rate') | float(0) %}
+        {{ (units_today * unit_rate) | round(2) }}
+      attributes:
+        power_usage: sensor.fridge_monitor_energy_power
+        Source: sensor.fridge_monitor_energy_today
+        daily_total: sensor.fridge_monitor_energy_today
+    - name: "Washing Machine: Cost (Today)"
+      unique_id: washing_maghine_electricity_cost_today
+      device_class: monetary
+      unit_of_measurement: "GBP"
+      state_class: "total"
+      icon: mdi:washing-machine
+      state: >
+        {% set units_today = states('sensor.washing_machine_monitor_today_s_consumption') | float(0) %}
+        {% set unit_rate = states('sensor.smart_meter_electricity_import_unit_rate') | float(0) %}
+        {{ (units_today * unit_rate) | round(2) }}
+      attributes:
+        power_usage: sensor.washing_machine_monitor_current_consumption
+        Source: sensor.washing_machine_monitor_today_s_consumption
+        daily_total: sensor.washing_machine_monitor_today_s_consumption
+    - name: "Tumble Dryer: Cost (Today)"
+      unique_id: tumble_dryer_electricity_cost_today
+      device_class: monetary
+      unit_of_measurement: "GBP"
+      state_class: "total"
+      icon: mdi:tumble-dryer
+      state: >
+        {% set units_today = states('sensor.tumble_dryer_monitor_today_s_consumption') | float(0) %}
+        {% set unit_rate = states('sensor.smart_meter_electricity_import_unit_rate') | float(0) %}
+        {{ (units_today * unit_rate) | round(2) }}
+      attributes:
+        power_usage: sensor.tumble_dryer_monitor_current_consumption
+        Source: sensor.tumble_dryer_monitor_today_s_consumption
+        daily_total: sensor.tumble_dryer_monitor_today_s_consumption
+    - name: "Dishwasher: Cost (Today)"
+      unique_id: dishwasher_electricity_cost_today
+      device_class: monetary
+      unit_of_measurement: "GBP"
+      state_class: "total"
+      icon: mdi:dishwasher
+      state: >
+        {% set units_today = states('sensor.dishwasher_monitor_today_s_consumption') | float(0) %}
+        {% set unit_rate = states('sensor.smart_meter_electricity_import_unit_rate') | float(0) %}
+        {{ (units_today * unit_rate) | round(2) }}
+      attributes:
+        power_usage: sensor.dishwasher_monitor_current_consumption
+        Source: sensor.dishwasher_monitor_today_s_consumption
+        daily_total: sensor.dishwasher_monitor_today_s_consumption
+    - name: "3D Printer: Cost (Today)"
+      unique_id: 3d_printer_electricity_cost_today
+      device_class: monetary
+      unit_of_measurement: "GBP"
+      state_class: "total"
+      icon: mdi:printer-3d
+      state: >
+        {% set units_today = states('sensor.3d_printer_monitor_today_s_consumption') | float(0) %}
+        {% set unit_rate = states('sensor.smart_meter_electricity_import_unit_rate') | float(0) %}
+        {{ (units_today * unit_rate) | round(2) }}
+      attributes:
+        power_usage: sensor.3d_printer_monitor_current_consumption
+        Source: sensor.3d_printer_monitor_today_s_consumption
+        daily_total: sensor.3d_printer_monitor_today_s_consumption
+    - name: "Freezer: Cost (Today)"
+      unique_id: freezer_electricity_cost_today
+      device_class: monetary
+      unit_of_measurement: "GBP"
+      state_class: "total"
+      icon: mdi:fridge-bottom
+      state: >
+        {% set units_today = states('sensor.freezer_monitor_energy_today') | float(0) %}
+        {% set unit_rate = states('sensor.smart_meter_electricity_import_unit_rate') | float(0) %}
+        {{ (units_today * unit_rate) | round(2) }}
+      attributes:
+        power_usage: sensor.freezer_monitor_energy_power
+        Source: sensor.freezer_monitor_energy_today
+        daily_total: sensor.freezer_monitor_energy_today
+    - name: "Shredder: Cost (Today)"
+      unique_id: shredder_electricity_cost_today
+      device_class: monetary
+      unit_of_measurement: "GBP"
+      state_class: "total"
+      icon: mdi:shredder
+      state: >
+        {% set units_today = states('sensor.shredder_monitor_today_s_consumption') | float(0) %}
+        {% set unit_rate = states('sensor.smart_meter_electricity_import_unit_rate') | float(0) %}
+        {{ (units_today * unit_rate) | round(2) }}
+      attributes:
+        power_usage: sensor.shredder_monitor_current_consumption
+        Source: sensor.shredder_monitor_today_s_consumption
+        daily_total: sensor.shredder_monitor_today_s_consumption
+    - name: "Office Heating Pad: Cost (Today)"
+      unique_id: office_heating_pad_electricity_cost_today
+      device_class: monetary
+      unit_of_measurement: "GBP"
+      state_class: "total"
+      icon: mdi:heating-coil
+      state: >
+        {% set units_today = states('sensor.tuya_switch_daily_energy_consumption') | float(0) %}
+        {% set unit_rate = states('sensor.smart_meter_electricity_import_unit_rate') | float(0) %}
+        {{ (units_today * unit_rate) | round(2) }}
+      attributes:
+        power_usage: sensor.office_heating_pad_tuya_power
+        Source: sensor.tuya_switch_daily_energy_consumption
+        daily_total: sensor.tuya_switch_daily_energy_consumption
+    - name: "Living Room UPS: Cost (Today)"
+      unique_id: lounge_ups_electricity_cost_today
+      device_class: monetary
+      unit_of_measurement: "GBP"
+      state_class: "total"
+      icon: mdi:car-battery
+      state: >
+        {% set units_today = states('sensor.lounge_ups_daily_energy_consumption') | float(0) %}
+        {% set unit_rate = states('sensor.smart_meter_electricity_import_unit_rate') | float(0) %}
+        {{ (units_today * unit_rate) | round(2) }}
+      attributes:
+        power_usage: sensor.lounge_ups_monitor_power
+        Source: sensor.lounge_ups_daily_energy_consumption
+        daily_total: sensor.lounge_ups_daily_energy_consumption
+    - name: "Computer UPS: Cost (Today)"
+      unique_id: computer_ups_electricity_cost_today
+      device_class: monetary
+      unit_of_measurement: "GBP"
+      state_class: "total"
+      icon: mdi:car-battery
+      state: >
+        {% set units_today = states('sensor.computer_ups_daily_energy_consumption') | float(0) %}
+        {% set unit_rate = states('sensor.smart_meter_electricity_import_unit_rate') | float(0) %}
+        {{ (units_today * unit_rate) | round(2) }}
+      attributes:
+        power_usage: sensor.computer_ups_power
+        Source: sensor.computer_ups_daily_energy_consumption
+        daily_total: sensor.computer_ups_daily_energy_consumption
+    - name: "3D Printer UPS: Cost (Today)"
+      unique_id: 3d_printer_ups_electricity_cost_today
+      device_class: monetary
+      unit_of_measurement: "GBP"
+      state_class: "total"
+      icon: mdi:car-battery
+      state: >
+        {% set units_today = states('sensor.3d_printer_ups_daily_energy_consumption') | float(0) %}
+        {% set unit_rate = states('sensor.smart_meter_electricity_import_unit_rate') | float(0) %}
+        {{ (units_today * unit_rate) | round(2) }}
+      attributes:
+        power_usage: sensor.3d_printer_ups_monitor_power
+        Source: sensor.3d_printer_ups_daily_energy_consumption
+        daily_total: sensor.3d_printer_ups_daily_energy_consumption
+    - name: "3D Printer Extension: Cost (Today)"
+      unique_id: 3d_printer_extension_electricity_cost_today
+      device_class: monetary
+      unit_of_measurement: "GBP"
+      state_class: "total"
+      icon: mdi:power-socket-uk
+      state: >
+        {% set units_today = states('sensor.3d_printer_extension_daily_energy_consumption') | float(0) %}
+        {% set unit_rate = states('sensor.smart_meter_electricity_import_unit_rate') | float(0) %}
+        {{ (units_today * unit_rate) | round(2) }}
+      attributes:
+        power_usage: sensor.3d_printer_extension_tuya_power
+        Source: sensor.3d_printer_extension_daily_energy_consumption
+        daily_total: sensor.3d_printer_extension_daily_energy_consumption
+    - name: "Bedroom Heater: Cost (Today)"
+      unique_id: bedroom_heater_electricity_cost_today
+      device_class: monetary
+      unit_of_measurement: "GBP"
+      state_class: "total"
+      icon: mdi:power-socket-uk
+      state: >
+        {% set units_today = states('sensor.bedroom_heater_daily_energy_consumption') | float(0) %}
+        {% set unit_rate = states('sensor.smart_meter_electricity_import_unit_rate') | float(0) %}
+        {{ (units_today * unit_rate) | round(2) }}
+      attributes:
+        power_usage: sensor.bedroom_heater_tuya_power
+        Source: sensor.bedroom_heater_daily_energy_consumption
+        daily_total: sensor.bedroom_heater_daily_energy_consumption
+    - name: "Dehumidifier Monitor: Cost (Today)"
+      unique_id: dehumidifier_monitor_electricity_cost_today
+      device_class: monetary
+      unit_of_measurement: "GBP"
+      state_class: "total"
+      icon: mdi:power-socket-uk
+      state: >
+        {% set units_today = states('sensor.dehumidifier_daily_energy_consumption') | float(0) %}
+        {% set unit_rate = states('sensor.smart_meter_electricity_import_unit_rate') | float(0) %}
+        {{ (units_today * unit_rate) | round(2) }}
+      attributes:
+        power_usage: sensor.dehumidifier_power_monitor_power
+        Source: sensor.dehumidifier_daily_energy_consumption
+        daily_total: sensor.dehumidifier_daily_energy_consumption
+    - name: "Desk Extension: Cost (Today)"
+      unique_id: desk_extension_electricity_cost_today
+      device_class: monetary
+      unit_of_measurement: "GBP"
+      state_class: "total"
+      icon: mdi:power-socket-uk
+      state: >
+        {% set units_today = states('sensor.desk_extension_daily_energy_consumption') | float(0) %}
+        {% set unit_rate = states('sensor.smart_meter_electricity_import_unit_rate') | float(0) %}
+        {{ (units_today * unit_rate) | round(2) }}
+      attributes:
+        power_usage: sensor.desk_extension_tuya_power
+        Source: sensor.desk_extension_daily_energy_consumption
+        daily_total: sensor.desk_extension_daily_energy_consumption
+    - name: "Foot Warmer: Cost (Today)"
+      unique_id: foot_warmer_electricity_cost_today
+      device_class: monetary
+      unit_of_measurement: "GBP"
+      state_class: "total"
+      icon: mdi:power-socket-uk
+      state: >
+        {% set units_today = states('sensor.foot_warmer_daily_energy_consumption') | float(0) %}
+        {% set unit_rate = states('sensor.smart_meter_electricity_import_unit_rate') | float(0) %}
+        {{ (units_today * unit_rate) | round(2) }}
+      attributes:
+        power_usage: sensor.foot_warmer_tuya_power
+        Source: sensor.foot_warmer_daily_energy_consumption
+        daily_total: sensor.foot_warmer_daily_energy_consumption
+    - name: "Hallway Heater: Cost (Today)"
+      unique_id: foot_warmer_electricity_cost_today
+      device_class: monetary
+      unit_of_measurement: "GBP"
+      state_class: "total"
+      icon: mdi:power-socket-uk
+      state: >
+        {% set units_today = states('sensor.hallway_heater_daily_energy_consumption') | float(0) %}
+        {% set unit_rate = states('sensor.smart_meter_electricity_import_unit_rate') | float(0) %}
+        {{ (units_today * unit_rate) | round(2) }}
+      attributes:
+        power_usage: sensor.hallway_heater_power
+        Source: sensor.hallway_heater_daily_energy_consumption
+        daily_total: sensor.hallway_heater_daily_energy_consumption
+    - name: "Lounge Heater: Cost (Today)"
+      unique_id: lounge_heater_electricity_cost_today
+      device_class: monetary
+      unit_of_measurement: "GBP"
+      state_class: "total"
+      icon: mdi:power-socket-uk
+      state: >
+        {% set units_today = states('sensor.lounge_heater_daily_energy_consumption') | float(0) %}
+        {% set unit_rate = states('sensor.smart_meter_electricity_import_unit_rate') | float(0) %}
+        {{ (units_today * unit_rate) | round(2) }}
+      attributes:
+        power_usage: sensor.lounge_heater_tuya_power
+        Source: sensor.lounge_heater_daily_energy_consumption
+        daily_total: sensor.lounge_heater_daily_energy_consumption
+    - name: "Office Heater: Cost (Today)"
+      unique_id: office_heater_electricity_cost_today
+      device_class: monetary
+      unit_of_measurement: "GBP"
+      state_class: "total"
+      icon: mdi:power-socket-uk
+      state: >
+        {% set units_today = states('sensor.office_heater_daily_energy_consumption') | float(0) %}
+        {% set unit_rate = states('sensor.smart_meter_electricity_import_unit_rate') | float(0) %}
+        {{ (units_today * unit_rate) | round(2) }}
+      attributes:
+        power_usage: sensor.office_heater_tuya_power
+        Source: sensor.office_heater_daily_energy_consumption
+        daily_total: sensor.office_heater_daily_energy_consumption
+    - name: "Office Heating Pad: Cost (Today)"
+      unique_id: office_heating_pad_electricity_cost_today
+      device_class: monetary
+      unit_of_measurement: "GBP"
+      state_class: "total"
+      icon: mdi:power-socket-uk
+      state: >
+        {% set units_today = states('sensor.tuya_switch_daily_energy_consumption') | float(0) %}
+        {% set unit_rate = states('sensor.smart_meter_electricity_import_unit_rate') | float(0) %}
+        {{ (units_today * unit_rate) | round(2) }}
+      attributes:
+        power_usage: sensor.office_heating_pad_tuya_power
+        Source: sensor.tuya_switch_daily_energy_consumption
+        daily_total: sensor.tuya_switch_daily_energy_consumption
+    - name: "Window Heater Extension: Cost (Today)"
+      unique_id: window_heater_extension_electricity_cost_today
+      device_class: monetary
+      unit_of_measurement: "GBP"
+      state_class: "total"
+      icon: mdi:power-socket-uk
+      state: >
+        {% set units_today = states('sensor.window_heater_extension_daily_energy_consumption') | float(0) %}
+        {% set unit_rate = states('sensor.smart_meter_electricity_import_unit_rate') | float(0) %}
+        {{ (units_today * unit_rate) | round(2) }}
+      attributes:
+        power_usage: sensor.window_heater_extension_tuya_power
+        Source: sensor.window_heater_extension_daily_energy_consumption
+        daily_total: sensor.window_heater_extension_daily_energy_consumption
+    - name: "TV Unit: Cost (Today)"
+      unique_id: tv_unit_electricity_cost_today
+      device_class: monetary
+      unit_of_measurement: "GBP"
+      state_class: "total"
+      icon: mdi:power-socket-uk
+      state: >
+        {% set units_today = states('sensor.tv_unit_daily_energy_consumption') | float(0) %}
+        {% set unit_rate = states('sensor.smart_meter_electricity_import_unit_rate') | float(0) %}
+        {{ (units_today * unit_rate) | round(2) }}
+      attributes:
+        power_usage: sensor.tv_unit_power
+        Source: sensor.tv_unit_daily_energy_consumption
+        daily_total: sensor.tv_unit_daily_energy_consumption
+    - name: "Kitchen Toaster: Cost (Today)"
+      unique_id: kitchen_toaster_electricity_cost_today
+      device_class: monetary
+      unit_of_measurement: "GBP"
+      state_class: "total"
+      icon: mdi:power-socket-uk
+      state: >
+        {% set units_today = states('sensor.kitchen_toaster_daily_energy_consumption') | float(0) %}
+        {% set unit_rate = states('sensor.smart_meter_electricity_import_unit_rate') | float(0) %}
+        {{ (units_today * unit_rate) | round(2) }}
+      attributes:
+        power_usage: sensor.kitchen_toaster_monitor_power
+        Source: sensor.kitchen_toaster_daily_energy_consumption
+        daily_total: sensor.kitchen_toaster_daily_energy_consumption
+    - name: "Kitchen Kettle: Cost (Today)"
+      unique_id: kitchen_kettle_electricity_cost_today
+      device_class: monetary
+      unit_of_measurement: "GBP"
+      state_class: "total"
+      icon: mdi:power-socket-uk
+      state: >
+        {% set units_today = states('sensor.kitchen_kettle_daily_energy_consumption') | float(0) %}
+        {% set unit_rate = states('sensor.smart_meter_electricity_import_unit_rate') | float(0) %}
+        {{ (units_today * unit_rate) | round(2) }}
+      attributes:
+        power_usage: sensor.kitchen_kettle_monitor_power
+        Source: sensor.kitchen_kettle_daily_energy_consumption
+        daily_total: sensor.kitchen_kettle_daily_energy_consumption
+    - name: "Bedside Cabinet Door: Cost (Today)"
+      unique_id: bedside_cabinet_door_electricity_cost_today
+      device_class: monetary
+      unit_of_measurement: "GBP"
+      state_class: "total"
+      icon: mdi:power-socket-uk
+      state: >
+        {% set units_today = states('sensor.bedside_cabinet_door_daily_energy_consumption') | float(0) %}
+        {% set unit_rate = states('sensor.smart_meter_electricity_import_unit_rate') | float(0) %}
+        {{ (units_today * unit_rate) | round(2) }}
+      attributes:
+        power_usage: sensor.bedside_cabinet_door_monitor_power
+        Source: sensor.bedside_cabinet_door_daily_energy_consumption
+        daily_total: sensor.bedside_cabinet_door_daily_energy_consumption
+    - name: "Bedside Cabinet Window: Cost (Today)"
+      unique_id: bedside_cabinet_window_electricity_cost_today
+      device_class: monetary
+      unit_of_measurement: "GBP"
+      state_class: "total"
+      icon: mdi:power-socket-uk
+      state: >
+        {% set units_today = states('sensor.bedside_cabinet_window_daily_energy_consumption') | float(0) %}
+        {% set unit_rate = states('sensor.smart_meter_electricity_import_unit_rate') | float(0) %}
+        {{ (units_today * unit_rate) | round(2) }}
+      attributes:
+        power_usage: sensor.bedside_cabinet_window_monitor_power
+        Source: sensor.bedside_cabinet_window_daily_energy_consumption
+        daily_total: sensor.bedside_cabinet_window_daily_energy_consumption

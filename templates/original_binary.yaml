@@ -1,0 +1,156 @@
+- binary_sensor:
+    - name: Water Jug Filter Needs Replacing
+      unique_id: water_jug_filter_needs_replacing
+      state: "{{ int(states('counter.water_jug_filter')) <= 5 }}"
+    - name: Replace Dishwasher Cassette
+      unique_id: replace_dishwasher_cassette
+      state: "{{ int(states('counter.dishwasher_refills_remaining')) <= 7 }}"
+    - name: Bathroom Door Occupancy
+      unique_id: bathroom_door
+      state: "{{ is_state('binary_sensor.bathroom_door_contact', 'off') }}"
+    - name: Alarm Clock Status
+      unique_id: alarm_clock_status
+      state: >
+        {{ states('binary_sensor.workday_sensor') }}
+      # {% set alarmClockOn = false %}
+      # {% set lastNotToday = as_timestamp(states('input_datetime.alarm_clock_ran')) < as_timestamp(today_at()) %}
+      # {% if is_state('input_select.manual_alarm_setting', 'Unset') %}
+      #   {% set alarmClockOn = is_state('binary_sensor.workday_sensor', 'on') %}
+      # {% else %}
+      #   {% set alarmClockOn = is_state('input_select.manual_alarm_setting', 'On') %}
+      # {% endif %}
+      # {{ alarmClockOn and lastNotToday and is_state('person.rosemary_orchard', 'home') }}
+    - name: No-One Home
+      unique_id: noone_home
+      device_class: occupancy
+      state: >
+        {{ not is_state('group.people', 'home') }}
+    - name: Someone Home
+      unique_id: someone_home
+      device_class: occupancy
+      state: >
+        {{ is_state('group.people', 'home') }}
+    - name: Living Room Occupied
+      unique_id: lounge_occupied
+      device_class: occupancy
+      delay_off: 00:05:00
+      state: >
+        {% set current =  is_state('binary_sensor.presence_lounge', 'on') %}
+        {% set lastSeen = states('sensor.last_occupied_room') | lower %}
+        {% set lastSeenLounge = 'lounge' in lastSeen %}
+        {% set lastSeenLivingRoom = 'living' in lastSeen %}
+        {% set lounge_occupied = [current, lastSeenLounge, lastSeenLivingRoom] | select('in', [on, 'on', True]) | list | count > 0 %}
+        {{ lounge_occupied }}
+    - name: Hallway Occupied
+      unique_id: hall_occupied
+      device_class: occupancy
+      delay_off: 00:05:00
+      state: >
+        {% set current =  is_state('binary_sensor.presence_hall', 'on') %}
+        {% set lastSeen = 'hall' in (states('sensor.last_occupied_room') | lower) %}
+        {% set hall_occupied = [current, lastSeen] | select('in', [on, 'on', True]) | list | count > 0 %}
+        {{ hall_occupied }}
+    - name: Bedroom Occupied
+      unique_id: bedroom_occupied
+      device_class: occupancy
+      delay_off: 00:05:00
+      state: >
+        {% set current = is_state('binary_sensor.presence_bedroom', 'on') %}
+        {% set lastSeen = 'bedroom' in (states('sensor.last_occupied_room') | lower) %}
+        {% set asleep = is_state('input_select.rose_state', 'Sleep') %}
+        {% set bedroom_occupied = [current, asleep, lastSeen] | select('in', [on, 'on', True]) | list | count > 0 %}
+        {{ bedroom_occupied }}
+    - name: Office Occupied
+      unique_id: office_occupied
+      device_class: occupancy
+      delay_off: 00:05:00
+      state: >
+        {% set current =  is_state('binary_sensor.presence_office', 'on') %}
+        {% set lastSeen = 'office' in (states('sensor.last_occupied_room') | lower) %}
+        {% set office_occupied = [current, lastSeen] | select('in', [on, 'on', True]) | list | count > 0 %}
+        {{ office_occupied }}
+    - name: Kitchen Occupied
+      unique_id: kitchen_occupied
+      device_class: occupancy
+      delay_off: 00:05:00
+      state: >
+        {% set current =  is_state('binary_sensor.presence_kitchen', 'on') %}
+        {% set lastSeen = is_state('sensor.last_occupied_room', 'Kitchen Presence') %}
+        {% set tvOn = is_state('media_player.kitchen_tv', 'playing') %}
+        {% set kitchen_occupied = [current, lastSeen, tvOn] | select('in', [on, 'on', True]) | list | count > 0 %}
+        {{ kitchen_occupied }}
+    - name: Bathroom Occupied
+      unique_id: bathroom_occupied
+      device_class: occupancy
+      delay_off: 00:03:00
+      state: >
+        {% set current = is_state('binary_sensor.presence_bathroom', 'on') %}
+        {% set lastSeen = 'bathroom' in (states('sensor.last_occupied_room') | lower) %}
+        {% set bathroom_occupied = [current, lastSeen] | select('in', [on, 'on', True]) | list | count > 0 %}
+        {{ bathroom_occupied }}
+    - name: Television On
+      unique_id: television_on
+      device_class: connectivity
+      state: >
+        {{ is_state('media_player.philips_tv', 'on') }}
+    - name: Television Active
+      unique_id: television_active
+      device_class: connectivity
+      state: >
+        {% if is_state('media_player.philips_tv', 'on') %}
+          {% if is_state('switch.harmony_hub_my_apple_tv', 'on') %}
+            {{ is_state('media_player.living_room_apple_tv', 'playing') or is_state('media_player.apple_tv_plex', 'playing') }}
+          {% else %}
+            {{ is_state('media_player.philips_tv', 'on') }}
+          {% endif %}
+        {% else %}
+          {{ false }}
+        {% endif %}
+    - name: Kitchen Television On
+      unique_id: kitchen_tv_on
+      state: >
+        {{ is_state('media_player.kitchen_tv', 'on') }}
+    - name: Rose Home
+      unique_id: rose_home
+      device_class: presence
+      state: >
+        {{ is_state('person.rosemary_orchard', 'home') }}
+    - name: A Heating Pad is On
+      unique_id: any_heating_pad
+      device_class: power
+      state: >
+        {{ is_state('input_boolean.living_room_heating_pad_controller', 'on') or is_state('input_boolean.office_heating_pad_controller', 'on') }}
+    - name: 'Work Laptop Docked'
+      unique_id: work_laptop_docked
+      device_class: presence
+      state: >
+        {% set isActive = is_state('sensor.work_laptop_ssid', 'The Promised LAN') and is_state('binary_sensor.work_laptop_active', 'on') and is_state('sensor.work_laptop_connection_type', 'Ethernet') and not is_state('sensor.work_laptop_frontmost_app', 'loginwindow') %}
+        {% set workingHours = now() > today_at("08:30") and now() < today_at("17:30") %}
+        {{ isActive and workingHours }}
+    - name: Rose Away from Home
+      unique_id: rose_away
+      state: "{{ not is_state('person.rosemary_orchard', 'home') }}"
+    - name: >
+        {% if is_state("input_boolean.logic_asleep", "on") %}
+          Asleep
+        {% else %}
+          Awake
+        {% endif %}
+      unique_id: asleep
+      state: "{{ is_state('input_boolean.logic_asleep', 'on') }}"
+      icon: >
+        {% if is_state("input_boolean.logic_asleep", "on") %}
+          mdi:sleep
+        {% else %}
+          mdi:sleep-off
+        {% endif %}
+    - name: Morning Script Ran Today
+      unique_id: morning_script_ran_today
+      state: >-
+        {{ state_attr('script.morning', 'last_triggered') > today_at('00:00') }}
+    - name: Bedroom TV is Active
+      unique_id: bedroom_tv_active
+      delay_off:
+        minutes: 5
+      state: >-
+        {{ is_state('media_player.plex_samsung_frame', 'playing') }}

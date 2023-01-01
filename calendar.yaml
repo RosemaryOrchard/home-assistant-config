@@ -1,0 +1,22 @@
+- platform: caldav
+  username: !secret icloud_user
+  password: !secret icloud_auth
+  url: https://caldav.icloud.com
+  days: 365
+  calendars:
+    - General
+    - iOS Today
+    - Mastermind Group
+    - Nested Folders
+    - Automators
+    - Podcasting
+    - Provisional
+    - Work
+    - Time Blocking
+    - Deadlines
+    - Automators
+    - UK Holidays
+    - TripIt
+    - Automators Airtable
+- platform: todoist
+  token: !secret todoist_api_token

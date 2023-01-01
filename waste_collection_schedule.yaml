@@ -1,0 +1,19 @@
+sources:
+  - name: wiltshire_gov_uk
+    args:
+      postcode: !secret waste_postcode
+      uprn: !secret waste_uprn
+    calendar_title: Bin Collections
+    customize:
+      - type: Household waste
+        alias: Rubbish
+        show: True
+        icon: mdi:trash-can-outline
+        # use_dedicated_calendar: True
+        # dedicated_calendar_title: wiltshire_collection_rubbish
+      - type: Mixed dry recycling (blue lidded bin) and glass (black box or basket)
+        alias: Recycling
+        show: True
+        icon: mdi:recycle
+        # use_dedicated_calendar: True
+        # dedicated_calendar_title: wiltshire_collection_recycling

@@ -1,0 +1,42 @@
+# - platform: attributes
+#   friendly_name: "Voltage"
+#   attribute: voltage
+#   device_class: voltage
+#   icon: mdi:sine-wave
+#   unit_of_measurement: 'V'
+#   entities:
+#     - switch.office_heating_pad
+#     - switch.office_heater
+#     - switch.lounge_ups_monitor
+#     - switch.3d_printer_ups_monitor
+#     - switch.computer_ups_monitor
+#     - switch.foot_warmer
+#     - switch.bedroom_heater
+# - platform: attributes
+#   friendly_name: "Current"
+#   attribute: current
+#   device_class: current
+#   icon: mdi:current-ac
+#   unit_of_measurement: 'A'
+#   entities:
+#     - switch.office_heating_pad
+#     - switch.office_heater
+#     - switch.lounge_ups_monitor
+#     - switch.3d_printer_ups_monitor
+#     - switch.computer_ups_monitor
+#     - switch.foot_warmer
+#     - switch.bedroom_heater
+# - platform: attributes
+#   friendly_name: "Current Consumption"
+#   attribute: current_consumption
+#   device_class: power
+#   icon: mdi:chart-histogram
+#   unit_of_measurement: 'W'
+#   entities:
+#     - switch.office_heating_pad
+#     - switch.office_heater
+#     - switch.lounge_ups_monitor
+#     - switch.3d_printer_ups_monitor
+#     - switch.computer_ups_monitor
+#     - switch.foot_warmer
+#     - switch.bedroom_heater

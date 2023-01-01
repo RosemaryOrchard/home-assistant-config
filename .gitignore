@@ -23,3 +23,5 @@ zigbee2mqtt/
 *.js
 *.css
 secrets.*
+secrets_original.yaml
+.DS_Store

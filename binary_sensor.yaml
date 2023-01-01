@@ -8,16 +8,33 @@
 - platform: threshold
   name: "Light Level: Lounge"
   entity_id: sensor.living_room_light_sensor_illuminance_lux
-  lower: 200
+  lower: 100
 - platform: threshold
   name: "Light Level: Kitchen"
   entity_id: sensor.kitchen_light_sensor_illuminance_lux
-  lower: 300
+  lower: 100
 - platform: threshold
   name: "Light Level: Bedroom"
   entity_id: sensor.bedroom_light_sensor_illuminance_lux
-  lower: 500
+  lower: 100
 - platform: threshold
   name: "Light Level: Office"
   entity_id: sensor.office_light_sensor_illuminance_lux
-  lower: 500
+  lower: 100
+- platform: ping
+  host: fr.smrhome.casa
+  name: "Le Pressoir"
+  count: 1
+  scan_interval: 600
+- platform: trend
+  sensors:
+    showering_detected:
+      entity_id: sensor.bathroom_climate_sensor_humidity
+      friendly_name: Showering Detected
+      device_class: occupancy
+- platform: rest
+  resource_template: "https://openapi.tuyaeu.com/v1.0/iot-03/devices/257535673083989c0d2f/specification"
+  headers:
+    User-Agent: Home Assistant
+    Content-Type: application/json
+    X-Custom-Header: '{{ states("input_text.the_custom_header") }}'

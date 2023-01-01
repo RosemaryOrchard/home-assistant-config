@@ -1,0 +1,41 @@
+- trigger:
+    - platform: state
+      entity_id:
+        - binary_sensor.presence_bathroom
+        - binary_sensor.presence_bedroom
+        - binary_sensor.presence_hall
+        - binary_sensor.presence_kitchen
+        - binary_sensor.presence_lounge
+        - binary_sensor.presence_office
+        - binary_sensor.rose_away_from_home
+  sensor:
+    - unique_id: last_occupied_room
+      name: Last Occupied Room
+      state: >
+        {% if is_state('binary_sensor.rose_away_from_home', 'on') %}
+          {{ states['binary_sensor.rose_away_from_home'].name }}
+        {% else %}
+          {% set rooms = 'binary_sensor.presence_bathroom', 'binary_sensor.presence_bedroom', 'binary_sensor.presence_hall', 'binary_sensor.presence_kitchen', 'binary_sensor.presence_lounge', 'binary_sensor.presence_office' %}
+          {% set roomSensors = namespace(sensors=[],all=[]) %}
+          {% for room in rooms %}
+            {% set roomData = states[room] %}
+            {% set roomSensors.all = roomSensors.all + [roomData] %}
+            {% if roomData.state in ['on', on, True] %}
+              {% set roomSensors.sensors = roomSensors.sensors + [roomData] %}
+            {% endif %}
+          {% endfor %}
+          {% if (roomSensors.sensors | count) > 0 %}
+            {% set roomList = roomSensors.sensors %}
+          {% else %}
+            {% set roomList = roomSensors.all %}
+          {% endif %}
+          {{ roomList | sort(true, attribute='last_updated') | map(attribute='name') | first | replace("Presence:", "") | trim }}
+        {% endif %}
+    - unique_id: rose_is_state
+      name: 'Rose'
+      state: "{{ states('input_select.rose_state') }}"
+    - name: Alarm Clock Timestamp
+      unique_id: alarm_clock_timestamp
+      device_class: timestamp
+      state: >
+        {{ today_at(states('input_datetime.alarm_time')) }}

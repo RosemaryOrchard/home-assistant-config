@@ -1,5 +1,3 @@
-sensor.radarr_movies:
-  entity_id: ddae264904b3ae5f90ad96998f39f713
 cover.vertical_rotate:
   device_class: blind
 cover.vertical_blind:

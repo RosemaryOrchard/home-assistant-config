@@ -1,0 +1,137 @@
+- name: Current Power Consumption
+  platform: integration
+  source: sensor.frient_energy_meter_reader_power
+  unique_id: current_power_consumption
+- name: 3D Printer Extension Power Consumption
+  platform: integration
+  round: 2
+  source: sensor.3d_printer_extension_tuya_power
+  unique_id: 3d_printer_extension_consumption
+  unit_prefix: k
+  unit_time: h
+- name: 3D Printer UPS Power Consumption
+  platform: integration
+  round: 2
+  source: sensor.3d_printer_ups_monitor_power
+  unique_id: 3d_printer_ups_consumption
+  unit_prefix: k
+  unit_time: h
+- name: Bedroom Heater Power Consumption
+  platform: integration
+  round: 2
+  source: sensor.bedroom_heater_tuya_power
+  unique_id: bedroom_heater_consumption
+  unit_prefix: k
+  unit_time: h
+- name: Bedside Cabinet Door Power Consumption
+  platform: integration
+  round: 2
+  source: sensor.bedside_cabinet_door_monitor_power
+  unique_id: bedside_cabinet_door_consumption
+  unit_prefix: k
+  unit_time: h
+- name: Bedside Cabinet Window Power Consumption
+  platform: integration
+  round: 2
+  source: sensor.bedroom_window_monitor_power
+  unique_id: bedside_cabinet_window_consumption
+  unit_prefix: k
+  unit_time: h
+- name: Computer UPS Power Consumption
+  platform: integration
+  round: 2
+  source: sensor.computer_ups_power
+  unique_id: computer_ups_consumption
+  unit_prefix: k
+  unit_time: h
+- name: Dehumidifier Power Consumption
+  platform: integration
+  round: 2
+  source: sensor.dehumidifier_power_monitor_power
+  unique_id: dehumidifier_consumption
+  unit_prefix: k
+  unit_time: h
+- name: Desk Extension Power Consumption
+  platform: integration
+  round: 2
+  source: sensor.desk_extension_tuya_power
+  unique_id: desk_extension_consumption
+  unit_prefix: k
+  unit_time: h
+- name: Foot Warmer Power Consumption
+  platform: integration
+  round: 2
+  source: sensor.foot_warmer_tuya_power
+  unique_id: foot_warmer_consumption
+  unit_prefix: k
+  unit_time: h
+- name: Lounge Heater Power Consumption
+  platform: integration
+  round: 2
+  source: sensor.lounge_heater_tuya_power
+  unique_id: lounge_heater_consumption
+  unit_prefix: k
+  unit_time: h
+- name: Lounge UPS Power Consumption
+  platform: integration
+  round: 2
+  source: sensor.lounge_ups_monitor_power
+  unique_id: lounge_ups_consumption
+  unit_prefix: k
+  unit_time: h
+- name: Office Heater Power Consumption
+  platform: integration
+  round: 2
+  source: sensor.office_heater_tuya_power
+  unique_id: office_heater_consumption
+  unit_prefix: k
+  unit_time: h
+- name: Office Heating Pad Power Consumption
+  platform: integration
+  round: 2
+  source: sensor.office_heating_pad_tuya_power
+  unique_id: office_heating_pad_switch_consumption
+  unit_prefix: k
+  unit_time: h
+- name: Window Extension Power Consumption
+  platform: integration
+  round: 2
+  source: sensor.window_heater_extension_tuya_power
+  unique_id: window_extension_consumption
+  unit_prefix: k
+  unit_time: h
+- name: TV Unit Power Consumption
+  platform: integration
+  round: 2
+  source: sensor.tv_unit_power
+  unique_id: tv_unit_consumption
+  unit_prefix: k
+  unit_time: h
+- name: Kitchen Toaster Power Consumption
+  platform: integration
+  round: 2
+  source: sensor.kitchen_toaster_monitor_power
+  unique_id: kitchen_toaster_consumption
+  unit_prefix: k
+  unit_time: h
+- name: Kitchen Kettle Power Consumption
+  platform: integration
+  round: 2
+  source: sensor.kitchen_kettle_monitor_power
+  unique_id: kitchen_kettle_consumption
+  unit_prefix: k
+  unit_time: h
+- name: Bedside Cabinet Door Power Consumption
+  platform: integration
+  round: 2
+  source: sensor.bedside_cabinet_door_monitor_power
+  unique_id: bedside_cabinet_door_consumption
+  unit_prefix: k
+  unit_time: h
+- name: Bedside Cabinet Window Power Consumption
+  platform: integration
+  round: 2
+  source: sensor.bedside_cabinet_door_monitor_power
+  unique_id: bedside_cabinet_door_consumption
+  unit_prefix: k
+  unit_time: h

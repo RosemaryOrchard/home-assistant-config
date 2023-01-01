@@ -1,0 +1,11 @@
+- sensor:
+    - name: "Days to Rubbish Collection"
+      unique_id: days_until_rubbish_collection
+      unit_of_measurement: "Days"
+      state: >
+        {{ state_attr('sensor.next_rubbish_collection', 'daysTo') }}
+    - name: "Days to Recycling Collection"
+      unique_id: days_until_recycling_collection
+      unit_of_measurement: "Days"
+      state: >
+        {{ state_attr('sensor.next_recycling_collection', 'daysTo') }}

@@ -1,0 +1,22 @@
+washing_machine_done:
+  name: Washing Machine Needs Emptying
+  done_message: Washing Machine Needs Emptying
+  entity_id: input_select.washing_machine_status
+  state: "Clean"
+  repeat: 30
+  can_acknowledge: true
+  notifiers:
+    - standard
+  data:
+    message_tag: washing_machine_alert
+tumble_dryer_done:
+  name: Tumble Dryer Needs Emptying
+  done_message: Tumble Dryer Needs Emptying
+  entity_id: input_select.tumble_dryer_status
+  state: "Needs Emptying"
+  repeat: 30
+  can_acknowledge: true
+  notifiers:
+    - standard
+  data:
+    message_tag: tumble_dryer_alert

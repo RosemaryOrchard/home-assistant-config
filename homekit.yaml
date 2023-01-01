@@ -4,45 +4,57 @@ filter:
   include_entities:
     - binary_sensor.3d_printer_smoke_alarm_smoke
     - binary_sensor.smoke_detector
-    - binary_sensor.front_door_lock_battery_low
-    - binary_sensor.patio_door_right_battery_low
+    - binary_sensor.storage_cupboard_door_sensor_contact
+    # - binary_sensor.storage_cupboard_flood_sensor_water_leak
     - climate.bedroom_thermostat
     - climate.hallway
     - climate.living_room
     - climate.office_thermostat
+    - cover.bedroom_blind
+    - cover.office_blind
+    - cover.bedroom_blind
     - cover.bedroom_curtain
     - cover.hall_curtain
+    - cover.kitchen_blind
     - cover.lounge_curtain
+    - cover.office_blind
     - cover.office_curtain
     - cover.patio_blinds
     - cover.patio_doors
-    - cover.vertical_open
-    - cover.homekit_vertical_rotate
+    - fan.bedroom_air_purifier
+    - fan.kitchen_extractor
+    - fan.office_air_purifier
+    - fan.smartmi_air_purifier_p1
     - humidifier.hallway_humidity_control
     - input_boolean.logic_asleep
+    - input_boolean.showering
     - input_button.homekit_going_out_scene
     - input_button.homekit_getting_up_scene
-    - input_select.electric_blanket_time_off_options
     - light.bathroom
     - light.bedroom_door_bedside_light
     - light.bedroom_window_bedside_light
+    - light.bookcase_light
+    - light.neopixel_christmas_tree
     - light.lava_lamp
     - light.kitchen
     - light.reading_light
-    - light.shelf_lights
+    - light.shelf_lightsp
     - light.uplighter
     - light.3d_printer_lights
+    - light.kitchen_cabinet_lights
+    - light.alcove_lights
+    - light.bookcase_light
+    - light.shelf_lights
+    - light.under_bed_lights
     - lock.front_door_lock
     - lock.main_door
     - lock.patio_door_left
     - lock.patio_door_right
-    - lock.patio_door_right
-    - remote.harmony_hub
     - scene.podcasting_lights
     - scene.work_background_lighting
     - script.all_heating_to_15
     - script.getting_up
-    - script.open_living_room_blinds
+    - script.going_out
     - script.morning
     - script.ready_for_bed
     - script.showering
@@ -53,11 +65,10 @@ filter:
     - sensor.kitchen_light_sensor_illuminance_lux
     - sensor.living_room_light_sensor_illuminance_lux
     - sensor.office_light_sensor_illuminance_lux
-    - sensor.patio_door_battery
     - switch.bedroom_air_purifier_power
     - switch.electric_blanket
 entity_config:
-  script.open_living_room_blinds:
+  script.going_out:
     name: Going Out Scene
   scene.podcasting_lights:
     name: Podcasting Lights Scene
@@ -77,3 +88,4 @@ entity_config:
     name: Sunset Scene
   script.time_to_sleep:
     name: Time to Sleep Scene
+# advertise_ip: !secret ha_ip_address

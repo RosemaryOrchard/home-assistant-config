@@ -8,39 +8,56 @@ http:
   use_x_forwarded_for: true
   trusted_proxies:
     - !secret ha_ip_address
+    - !secret home_server_address
+alert: !include alerts.yaml
+alexa: !include alexa.yaml
 automation: !include automations.yaml
 binary_sensor: !include binary_sensor.yaml
-calendar: !include caldav.yaml
+calendar: !include calendar.yaml
 camera: !include camera.yaml
 climate: !include climate.yaml
+conversation:
 cover: !include cover.yaml
+device_tracker: !include_dir_list device_tracker
+downloader:
+  download_dir: downloads
+fan: !include fan.yaml
+feedreader: !include feeds.yaml
 frontend:
   themes: !include_dir_merge_named themes
-generic_hygrostat: !include hygrostat.yaml
+# generic_hygrostat: !include hygrostat.yaml
 group: !include groups.yaml
+history: !include history.yaml
 homekit: !include homekit.yaml
 influxdb: !include influxdb.yaml
-logbook:
+logbook: !include logbook.yaml
 logger: !include logger.yaml
 media_player: !include media_player.yaml
+mqtt:
+  sensor: !include_dir_merge_list mqtt/sensor
 notify: !include notify.yaml
 plant: !include plant.yaml
+powercalc:
 proximity: !include proximity.yaml
-pyscript:
-  allow_all_imports: true
-  hass_is_global: true
-recorder:
-  db_url: !secret mysql_connect
+# pyscript:
+#   allow_all_imports: true
+#   hass_is_global: true
+python_script:
+recorder: !include recorder.yaml
 rest_command: !include rest_command.yaml
 scene: !include scenes.yaml
 script: !include scripts.yaml
-sensor: !include sensor.yaml
-switch: !include switch.yaml
+sensor: !include_dir_merge_list sensors
+switch: !include_dir_list switch
 telegram_bot: !include telegram.yaml
-template: !include template.yaml
+template: !include_dir_merge_list templates
 tts:
   - platform: picotts
     language: "en-GB"
+    service_name: picotts_say
 utility_meter: !include utility_meter.yaml
+wake_on_lan:
+waste_collection_schedule: !include waste_collection_schedule.yaml
 webhook_service:
-withings: !include withings.yaml
+withings:
+  use_webhook: true

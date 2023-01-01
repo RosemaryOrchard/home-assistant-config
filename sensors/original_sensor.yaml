@@ -1,0 +1,153 @@
+- platform: rest
+  name: SwitchBot Bedroom Curtain
+  resource: !secret switchbot_bedroom_status_url
+  method: GET
+  scan_interval: 600
+  headers:
+    Authorization: !secret switchbot_api
+    Content-Type: "application/json"
+  value_template: >-
+    {% set slidePosition = value_json.body.slidePosition | int(0) %}
+    {% if slidePosition > 95 %} 0
+    {% elif slidePosition < 5 %} 100
+    {% else %} {{ 100 - slidePosition}}
+    {% endif %}
+  json_attributes_path: "$.body"
+  json_attributes:
+    - deviceId
+    - deviceType
+    - hubDeviceId
+    - calibrate
+    - group
+    - moving
+    - slidePosition
+- platform: rest
+  name: SwitchBot Hall Curtain
+  resource: !secret switchbot_hall_status_url
+  method: GET
+  scan_interval: 600
+  headers:
+    Authorization: !secret switchbot_api
+    Content-Type: "application/json"
+  value_template: >-
+    {% set slidePosition = value_json.body.slidePosition | int(0) %}
+    {% if slidePosition > 95 %} 0
+    {% elif slidePosition < 5 %} 100
+    {% else %} {{ 100 - slidePosition}}
+    {% endif %}
+  json_attributes_path: "$.body"
+  json_attributes:
+    - deviceId
+    - deviceType
+    - hubDeviceId
+    - calibrate
+    - group
+    - moving
+    - slidePosition
+- platform: rest
+  name: SwitchBot Bedroom Light Curtain
+  resource: !secret switchbot_lounge_status_url
+  method: GET
+  scan_interval: 600
+  headers:
+    Authorization: !secret switchbot_api
+    Content-Type: "application/json"
+  value_template: >-
+    {% set slidePosition = value_json.body.slidePosition | int(0) %}
+    {% if slidePosition > 95 %} 0
+    {% elif slidePosition < 5 %} 100
+    {% else %} {{ 100 - slidePosition}}
+    {% endif %}
+  json_attributes_path: "$.body"
+  json_attributes:
+    - deviceId
+    - deviceType
+    - hubDeviceId
+    - calibrate
+    - group
+    - moving
+    - slidePosition
+- platform: rest
+  name: SwitchBot Office Curtain
+  resource: !secret switchbot_office_status_url
+  method: GET
+  scan_interval: 600
+  headers:
+    Authorization: !secret switchbot_api
+    Content-Type: "application/json"
+  value_template: >-
+    {% set slidePosition = value_json.body.slidePosition | int(0) %}
+    {% if slidePosition > 95 %} 0
+    {% elif slidePosition < 5 %} 100
+    {% else %} {{ 100 - slidePosition}}
+    {% endif %}
+  json_attributes_path: "$.body"
+  json_attributes:
+    - deviceId
+    - deviceType
+    - hubDeviceId
+    - calibrate
+    - group
+    - moving
+    - slidePosition
+- platform: time_date
+  display_options:
+    - "time"
+    - "date"
+    - "date_time"
+    - "date_time_utc"
+    - "date_time_iso"
+    - "time_date"
+    - "time_utc"
+    # start: "{{ now().replace(hour=0, minute=0, second=0, microsecond=0) }}"
+    # duration:
+    #   hours: 24
+# - platform: temperature_feels_like
+#   unique_id: hall_feels_like
+#   name: "Hallway Feels Like Temperature"
+#   source:
+#     - sensor.hallway_climate_sensor_temperature
+#     - sensor.hallway_climate_sensor_humidity
+# - platform: temperature_feels_like
+#   unique_id: bedroom_feels_like
+#   name: "Bedroom Feels Like Temperature"
+#   source:
+#     - sensor.netatmo_bedroom_temperature
+#     - sensor.netatmo_bedroom_humidity
+# - platform: temperature_feels_like
+#   unique_id: office_feels_like
+#   name: "Office Feels Like Temperature"
+#   source:
+#     - sensor.netatmo_queens_square_station_additional_smart_indoor_module_temperature
+#     - sensor.netatmo_queens_square_station_additional_smart_indoor_module_humidity
+# - platform: temperature_feels_like
+#   unique_id: lounge_feels_like
+#   name: "Living Room Feels Like Temperature"
+#   source:
+#     - sensor.netatmo_queens_square_station_temperature
+#     - sensor.netatmo_queens_square_station_humidity
+# - platform: temperature_feels_like
+#   unique_id: kitchen_feels_like
+#   name: "Kitchen Feels Like Temperature"
+#   source:
+#     - sensor.kitchen_climate_sensor_temperature
+#     - sensor.kitchen_climate_sensor_humidity
+# - platform: temperature_feels_like
+#   unique_id: bathroom_feels_like
+#   name: "Bathroom Feels Like Temperature"
+#   source:
+#     - sensor.bathroom_climate_sensor_temperature
+#     - sensor.bathroom_climate_sensor_humidity
+- platform: illuminance
+  entity_id: weather.home
+- platform: rest
+  resource: http://ip.jsontest.com
+  name: External IP
+  value_template: "{{ value_json.ip }}"
+- platform: websocket_api
+- platform: seventeentrack
+  username: !secret track_username
+  password: !secret track_password
+- platform: websocket_api
+- platform: ouraring
+  api_token: !secret oura_api_token

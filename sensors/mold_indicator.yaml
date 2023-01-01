@@ -1,0 +1,6 @@
+- platform: mold_indicator
+  name: Bedroom Mold Indicator
+  indoor_temp_sensor: sensor.netatmo_bedroom_temperature
+  indoor_humidity_sensor: sensor.netatmo_bedroom_humidity
+  outdoor_temp_sensor: sensor.netatmo_queens_square_station_outdoor_temperature
+  calibration_factor: 2.0

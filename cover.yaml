@@ -4,13 +4,14 @@
       unique_id: bedroom_curtains
       device_class: curtain
       icon_template: >-
-        {% if (states('sensor.switchbot_bedroom_curtain') | default(0) | int) < 90 %}
+        {% if (states('sensor.switchbot_bedroom_curtain') | int(0)) < 90 %}
           mdi:curtains
         {% else %}
           mdi:curtains-closed
         {% endif %}
       friendly_name: "Bedroom Curtains"
-      position_template: "{{ states('sensor.switchbot_bedroom_curtain') | default(0) | float }}"
+      value_template: "{{ is_state('sensor.switchbot_bedroom_curtain', '0') | iif('open', 'closed') }}"
+      position_template: "{{ states('sensor.switchbot_bedroom_curtain') | float(0) }}"
       open_cover:
         service: rest_command.switchbot_device_command
         data:
@@ -36,13 +37,14 @@
       unique_id: office_curtains
       device_class: curtain
       icon_template: >-
-        {% if (states('sensor.switchbot_office_curtain') | default(0) | int) < 90 %}
+        {% if (states('sensor.switchbot_office_curtain') | int(0)) < 90 %}
           mdi:curtains
         {% else %}
           mdi:curtains-closed
         {% endif %}
       friendly_name: "Office Curtains"
-      position_template: "{{ states('sensor.switchbot_office_curtain') | default(0) | float }}"
+      value_template: "{{ is_state('sensor.switchbot_office_curtain', '0') | iif('open', 'closed') }}"
+      position_template: "{{ states('sensor.switchbot_office_curtain') | float(0) }}"
       open_cover:
         service: rest_command.switchbot_device_command
         data:
@@ -68,13 +70,14 @@
       unique_id: bedroom_light_curtain
       device_class: curtain
       icon_template: >-
-        {% if (states('sensor.switchbot_bedroom_light_curtain') | default(0) | int) < 90 %}
+        {% if (states('sensor.switchbot_bedroom_light_curtain') | int(0)) < 90 %}
           mdi:curtains
         {% else %}
           mdi:curtains-closed
         {% endif %}
       friendly_name: "Bedroom Light Curtains"
-      position_template: "{{ states('sensor.switchbot_bedroom_light_curtain') | default(0) | float }}"
+      value_template: "{{ is_state('sensor.switchbot_bedroom_light_curtain', '0') | iif('open', 'closed') }}"
+      position_template: "{{ states('sensor.switchbot_bedroom_light_curtain') | float(0) }}"
       open_cover:
         service: rest_command.switchbot_device_command
         data:
@@ -95,13 +98,14 @@
       unique_id: hall_curtain
       device_class: curtain
       icon_template: >-
-        {% if (states('sensor.switchbot_hall_curtain') | default(0) | int) < 90 %}
+        {% if (states('sensor.switchbot_hall_curtain') | int(0)) < 90 %}
           mdi:curtains
         {% else %}
           mdi:curtains-closed
         {% endif %}
       friendly_name: "Front Door Curtain"
-      position_template: "{{ states('sensor.switchbot_hall_curtain') | default(0) | float }}"
+      value_template: "{{ is_state('sensor.switchbot_hall_curtain', '0') | iif('open', 'closed') }}"
+      position_template: "{{ states('sensor.switchbot_hall_curtain') | float(0) }}"
       open_cover:
         service: rest_command.switchbot_device_command
         data:
@@ -127,9 +131,12 @@
       unique_id: patio_doors
       device_class: garage
       friendly_name: "Patio Doors"
-      value_template: "{{ is_state('lock.patio_door_left', 'locked') and is_state('lock.patio_door_right', 'locked') | iif('closed', 'open') }}"
+      value_template: "{{ is_state('binary_sensor.patio_door_contact', 'off') and is_state('lock.patio_door_left', 'locked') and is_state('lock.patio_door_right', 'locked') | iif('closed', 'open') }}"
       open_cover:
-        service: script.patio_door_unlock_as_garage
+        service: lock.unlock
+        entity_id:
+          - lock.patio_door_right
+          - lock.patio_door_left
       close_cover:
         service: lock.lock
         target:
@@ -143,7 +150,7 @@
       open_cover:
         service: script.open_living_room_blinds
       close_cover:
-        service: script.1642870456606
+        service: script.lounge_blinds_close
         data:
           modus: "close"
       stop_cover:
@@ -155,19 +162,20 @@
       set_cover_position:
         service: cover.set_cover_position
         data:
-          position: "{{position}}"
+          position: "{{ position }}"
         target:
           entity_id:
             - cover.vertical_open
       set_cover_tilt_position:
         service: cover.set_cover_position
         data:
-          position: "{{tilt}}"
+          position: "{{ tilt }}"
         target:
           entity_id:
             - cover.vertical_rotate
-      value_template: "{{is_state('cover.vertical_open', 'open')}}"
-      tilt_template: "{{states('cover.vertical_rotate') | default(50)}}"
+      # value_template: "{{ states('cover.vertical_open') }}"
+      position_template: "{{ state_attr('cover.vertical_open', 'position') | float(100) }}"
+      tilt_template: "{{ state_attr('cover.vertical_rotate', 'position') | float(50) }}"
       icon_template: >-
         {% if is_state('cover.vertical_open', 'open') %}
           mdi:door-sliding
@@ -196,11 +204,13 @@
       set_cover_tilt_position:
         service: cover.set_cover_position
         data:
-          position: "{{tilt}}"
+          position: "{{ tilt }}"
         target:
           entity_id:
             - cover.vertical_rotate
-      value_template: "{{is_state('cover.vertical_open', 'open')}}"
+      # value_template: "{{ states('cover.vertical_open') }}"
+      # position_template: "{{ state_attr('cover.vertical_open', 'position') | float(100) }}"
+      tilt_template: "{{ state_attr('cover.vertical_rotate', 'position') | float(50) }}"
       icon_template: >-
         {% if is_state('cover.vertical_open', 'open') %}
           mdi:door-sliding

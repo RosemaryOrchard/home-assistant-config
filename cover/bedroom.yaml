@@ -1,0 +1,35 @@
+platform: template
+covers:
+  bedroom_curtain:
+    unique_id: bedroom_curtains
+    device_class: curtain
+    icon_template: >-
+      {% if (states('sensor.switchbot_bedroom_curtain') | int(0)) < 90 %}
+        mdi:curtains
+      {% else %}
+        mdi:curtains-closed
+      {% endif %}
+    friendly_name: "Bedroom Curtains"
+    value_template: "{{ is_state('sensor.switchbot_bedroom_curtain', '0') | iif('open', 'closed') }}"
+    position_template: "{{ states('sensor.switchbot_bedroom_curtain') | float(0) }}"
+    open_cover:
+      service: rest_command.switchbot_device_command
+      data:
+        deviceId: !secret switchbot_bedroom_deviceId
+        command: "turnOn"
+    close_cover:
+      service: rest_command.switchbot_device_command
+      data:
+        deviceId: !secret switchbot_bedroom_deviceId
+        command: "turnOff"
+    stop_cover:
+      service: rest_command.switchbot_device_command
+      data:
+        deviceId: !secret switchbot_bedroom_deviceId
+        command: "turnOff"
+    set_cover_position:
+      service: rest_command.switchbot_device_command
+      data:
+        deviceId: !secret switchbot_bedroom_deviceId
+        command: "setPosition"
+        parameter: "0,ff,{{100-position}}"

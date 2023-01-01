@@ -1,0 +1,51 @@
+- platform: waste_collection_schedule
+  name: Next Rubbish Collection Day
+  details_format: appointment_types
+  value_template: '{{ value.date.strftime("%a") }}'
+  add_days_to: True
+  types:
+    - Household waste
+    - Rubbish
+- platform: waste_collection_schedule
+  name: Next Recycling Collection Day
+  details_format: appointment_types
+  value_template: '{{ value.date.strftime("%a") }}'
+  add_days_to: True
+  types:
+    - Mixed dry recycling (blue lidded bin) and glass (black box or basket)
+    - Recycling
+- platform: waste_collection_schedule
+  name: Next Rubbish Collection Date
+  details_format: appointment_types
+  value_template: '{{ value.date.strftime("%d.%m.%Y") }}'
+  add_days_to: True
+  types:
+    - Household waste
+    - Rubbish
+- platform: waste_collection_schedule
+  name: Next Recycling Collection Date
+  details_format: appointment_types
+  value_template: '{{ value.date.strftime("%d.%m.%Y") }}'
+  add_days_to: True
+  types:
+    - Mixed dry recycling (blue lidded bin) and glass (black box or basket)
+    - Recycling
+- platform: waste_collection_schedule
+  name: Next Rubbish Collection Countdown
+  details_format: appointment_types
+  value_template: "{{ value.daysTo }}"
+  add_days_to: True
+  types:
+    - Household waste
+    - Rubbish
+- platform: waste_collection_schedule
+  name: Next Recycling Collection Countdown
+  details_format: appointment_types
+  value_template: "{{ value.daysTo }}"
+  add_days_to: True
+  types:
+    - Mixed dry recycling (blue lidded bin) and glass (black box or basket)
+    - Recycling
+- platform: waste_collection_schedule
+  name: Next Bin Collections
+  details_format: upcoming

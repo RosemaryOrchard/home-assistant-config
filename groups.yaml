@@ -10,4 +10,16 @@ rechargeable_batteries:
   entities:
     - sensor.lounge_left_curtain_battery
     - sensor.lounge_right_curtain_battery
-    
+    - sensor.doorbell_battery
+    - sensor.curtain_front_door_battery
+    - sensor.office_curtain_left_battery
+    - sensor.office_curtain_right_battery
+    - sensor.bedroom_curtain_left_battery
+    - sensor.bedroom_curtain_right_battery
+    - sensor.bedroom_light_curtain_left_battery
+    - sensor.bedroom_light_curtain_right_battery
+    - sensor.kitchen_blind_battery
+    - sensor.bedroom_blind_battery
+    - sensor.office_blind_battery
+    - sensor.vertical_rotate_battery
+    - sensor.vertical_open_battery

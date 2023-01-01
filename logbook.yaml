@@ -1,0 +1,11 @@
+exclude:
+  entities:
+    - sensor.grocy_in_15_minutes
+    - sensor.date_time_iso
+    - sensor.date_time_utc
+    - sensor.time_utc
+    - sensor.time
+    - sensor.date_time
+  entity_globs:
+    - sensor.*_last_updated
+    - sensor.*_uptime*
